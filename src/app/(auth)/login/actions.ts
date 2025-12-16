@@ -18,7 +18,7 @@ export async function login(formData: FormData) {
 		options: {
 			emailRedirectTo: `${
 				process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-			}/auth/callback`,
+			}/callback`,
 		},
 	});
 

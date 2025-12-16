@@ -5,7 +5,7 @@ export async function GET(request: Request) {
 	// 1. Grab the 'code' and 'next' (redirect path) from the URL
 	const { searchParams, origin } = new URL(request.url);
 	const code = searchParams.get("code");
-	const next = searchParams.get("next") ?? "/";
+	const next = searchParams.get("next") ?? "/?login=success";
 
 	if (code) {
 		// 2. Create the Supabase client
