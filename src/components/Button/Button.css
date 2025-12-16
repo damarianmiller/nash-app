@@ -1,0 +1,43 @@
+a.app-button, button.app-button {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xs);
+
+    font-size: var(--size-m);
+    font-weight: 700;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+
+    border-style: solid;
+    border-width: 4px;
+    border-color: var(--color-dark);
+    border-radius: var(--radius-theme);
+
+    box-shadow: 3px 3px 0px var(--color-dark);
+
+    width: auto;
+    height: auto;
+    padding: var(--space-s);
+    margin: 0;
+    margin-bottom: 3px;
+
+    &.stacked {
+        flex-direction: column;
+    }
+
+    &:hover {
+        cursor: pointer;
+        
+        translate: 3px 3px;
+
+        box-shadow: none;
+    }
+
+    &.active {
+        translate: 3px 3px;
+
+        box-shadow: inset 3px 3px 3px var(--color-dark);
+    }
+}

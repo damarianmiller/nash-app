@@ -1,0 +1,12 @@
+form.app-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-s);
+
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}

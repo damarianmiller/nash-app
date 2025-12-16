@@ -1,0 +1,16 @@
+header.app-topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+    padding: var(--space-xs);
+    margin: 0;
+
+    h1.app-topbar-title {
+        font-family: var(--font-theme);
+        font-size: var(--size-xxl);
+    }
+}
