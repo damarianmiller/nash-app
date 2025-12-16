@@ -2,7 +2,6 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
-	// 1. Create the response object early so we can modify its headers
 	let supabaseResponse = NextResponse.next({
 		request,
 	});
@@ -37,24 +36,29 @@ export async function updateSession(request: NextRequest) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	// ==========================================
-	// 🛡️ BOUNCER LOGIC STARTS HERE
-	// ==========================================
-
 	// A. Define which pages need protection
-	// You can add more here later, like '/dashboard' or '/profile'
-	const protectedPaths = ["/","/assignments","/courses"];
+	const protectedPaths = ["/assignments", "/courses", "/dashboard"];
 
 	// B. Check where the user is trying to go
 	const url = request.nextUrl.clone();
-	const isTryingToAccessProtectedParams = protectedPaths.some((path) =>
+
+	// Check if the current path starts with any of the protected paths
+	const isProtected = protectedPaths.some((path) =>
 		url.pathname.startsWith(path)
 	);
 
-	// C. The Rule: If NO user AND trying to access protected page -> Kick to Login
-	if (!user && isTryingToAccessProtectedParams) {
-		url.pathname = "/login";
-		return NextResponse.redirect(url);
+	// OPTIONAL: If you want to protect the home page "/" specifically
+	// check for it exactly, not using startsWith
+	const isHomePage = url.pathname === "/";
+
+	// C. The Rule: If NO user...
+	if (!user) {
+		// ...AND trying to access a protected page OR the home page
+		if (isProtected || isHomePage) {
+			url.pathname = "/login";
+			return NextResponse.redirect(url);
+		}
 	}
+
 	return supabaseResponse;
 }

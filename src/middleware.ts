@@ -2,7 +2,6 @@ import { type NextRequest } from "next/server";
 import { updateSession } from "@/utilities/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-	// Simply run the helper function we just wrote
 	return await updateSession(request);
 }
 
