@@ -1,8 +1,7 @@
 import Container from "@/components/Container/Container";
 import Form from "@/components/Form/Form";
 import * as Input from "@/components/Form/Input";
-
-function login() {}
+import { login } from "./actions";
 
 export default function LoginView() {
     return (
