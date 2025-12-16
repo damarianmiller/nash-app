@@ -6,13 +6,10 @@ import { createClient } from "@/utilities/supabase/server";
 
 export async function login(formData: FormData) {
 	const supabase = await createClient();
-
 	const email = formData.get("email") as string;
-
 	if (!email) {
-		redirect("/login?error=Email is required");
+		redirect("/login?error=empty_email");
 	}
-
 	const { error } = await supabase.auth.signInWithOtp({
 		email,
 		options: {
@@ -21,11 +18,9 @@ export async function login(formData: FormData) {
 			}/callback`,
 		},
 	});
-
 	if (error) {
-		redirect("/login?error=Could not authenticate user");
+		redirect("/login?error=authentication_failed");
 	}
-
 	revalidatePath("/", "layout");
 	redirect("/login?message=Check email to continue sign in process");
 }
