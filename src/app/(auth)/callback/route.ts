@@ -1,25 +1,38 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/utilities/supabase/server";
+// Make sure this points to your NEW location from the cleanup
+import { createClient } from "@/lib/supabase";
 
 export async function GET(request: Request) {
-	// 1. Grab the 'code' and 'next' (redirect path) from the URL
 	const { searchParams, origin } = new URL(request.url);
 	const code = searchParams.get("code");
-	const next = searchParams.get("next") ?? "/?login=success";
+	const next = searchParams.get("next") ?? "/";
 
 	if (code) {
-		// 2. Create the Supabase client
 		const supabase = await createClient();
-
-		// 3. Exchange the temporary code for a permanent Session Cookie
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
-
 		if (!error) {
-			// 4. If successful, forward the user to their destination (or home)
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+
+			if (user?.email) {
+				// 2. Check if they exist in your 'students' table
+				const { data: student } = await supabase
+					.from("students")
+					.select("id")
+					.eq("email", user.email)
+					.single();
+
+				// 3. If NOT found, force them to Register
+				if (!student) {
+					return NextResponse.redirect(`${origin}/register`);
+				}
+			}
+
+			// 4. Found them? Send them to dashboard
 			return NextResponse.redirect(`${origin}${next}`);
 		}
 	}
 
-	// 5. If something broke, send them to an error page
 	return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }

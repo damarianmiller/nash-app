@@ -13,9 +13,9 @@
     --space-xs: 0.25rem;
     --space-s: 0.5rem;
     --space-m: 1rem;
-    --space-l: 1.5rem;
-    --space-xl: 2rem;
-    --space-xxl: 3rem;
+    --space-l: 2rem;
+    --space-xl: 3rem;
+    --space-xxl: 4rem;
 
     --size-xxs: 0.25rem;
     --size-xs: 0.5rem;
@@ -31,6 +31,7 @@
     --radius-theme: 0.75rem;
 
     --font-theme: 'Modak', cursive;
+    --font-main: 'Unbounded', sans-serif;
 }
 
 * {
@@ -40,7 +41,7 @@
 
 html, body {
 
-    font-family: 'Unbounded', sans-serif;
+    font-family: var(--font-main);
     font-size: 16px;
 
     width: 100%;
@@ -70,6 +71,30 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-family: var(--font-theme);
+    font-size: var(--size-xxl);
+    font-weight: 800;
+}
+h2 {
+    font-size: var(--size-xl);
     font-weight: 700;
-    line-height: 0.9;
+} 
+h3{
+    font-size: var(--size-l);
+    font-weight: 500;
+}
+h4 {
+    font-size: var(--size-l);
+    font-weight: 700;
+}
+h5 {
+    font-size: var(--size-m);
+    font-weight: 500;
+}
+h6 {
+    font-size: var(--size-m);
+    font-weight: 700;
+}
+p {
+    font-size: var(--size-s);
+    font-weight: 400;
 }

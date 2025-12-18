@@ -21,6 +21,7 @@ a.app-button, button.app-button {
     height: auto;
     padding: var(--space-s);
     margin: 0;
+    margin-right: 3px;
     margin-bottom: 3px;
 
     &.stacked {
