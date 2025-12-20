@@ -1,52 +1,32 @@
 import "./Input.css";
 import BaseProps from "../props";
 interface InputProps extends BaseProps {
+    label?: string;
     name?: string;
     type?: string;
     placeholder?: string;
     value?: string;
     required?: boolean;
+    pattern?: string;
 }
 
-function Input({ name, type, placeholder, value, required }: InputProps) {
+export default function Input({ className, name, type, placeholder, value, required, pattern}: InputProps) {
+    const classNames = "app-input" + (className ? " " + className : "");
     return (
         <input
+            className={classNames}
             name={name}
             type={type}
             placeholder={placeholder}
             value={value}
             required={required}
+            pattern={pattern}
         />
     );
 }
 
-export function Email({ required, value }: InputProps) {
+export function Email({required}: InputProps) {
     return (
-        <input name="email" type="email" placeholder="email@example.com" value={value} required={required} />
+        <Input label="Email Address" type="email" name="email" placeholder="user@example.com" required={required} />
     );
 }
-
-export function Phone({required, value }: InputProps) {
-    return (
-        <input name="phone" type="tel" placeholder="(123) 456-7890" value={value} required={required} />
-    );
-}
-
-export function Text({ name, placeholder, value, required }: InputProps) {
-    return (
-        <input name={name} type="text" placeholder={placeholder} value={value} required={required} />
-    );
-}
-
-export function FirstName ({ required, value }: InputProps) {
-    return (
-        <input name="firstName" type="text" placeholder="John" value={value} required={required} />
-    );
-}
-
-export function LastName ({ required, value }: InputProps) {
-    return (
-        <input name="lastName" type="text" placeholder="Doe" value={value} required={required} />
-    );
-}
-

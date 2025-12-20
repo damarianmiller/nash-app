@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
 				// 3. If NOT found, force them to Register
 				if (!student) {
-					return NextResponse.redirect(`${origin}/register`);
+					return NextResponse.redirect(`${origin}/access?new-user=true&email=${encodeURIComponent(user.email)}`);
 				}
 			}
 

@@ -1,6 +1,7 @@
 div.app-container {
     display: flex;
 
+
     &.flow-row {
         flex-direction: row;
     }

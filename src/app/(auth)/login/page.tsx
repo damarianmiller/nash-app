@@ -1,6 +1,6 @@
 import Container from "@/components/Container/Container";
 import Form from "@/components/Form/Form";
-import * as Input from "@/components/Form/Input";
+import Input from "@/components/Form/Input";
 import { login } from "../actions";
 
 export default function LoginView() {
@@ -8,7 +8,7 @@ export default function LoginView() {
         <Container flow="column" gap="m" mainAxisAlign="center" crossAxisAlign="center">
             <h2>Login</h2>
             <Form SubmitButtonLabel="Continue" action={login}>
-                <Input.Email />
+                <Input type="email" name="email" placeholder="email@example.com" required={true} />
             </Form>
         </Container>
     );

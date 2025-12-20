@@ -7,9 +7,7 @@ import { createClient } from "@/lib/supabase";
 export async function login(formData: FormData) {
 	const supabase = await createClient();
 	const email = formData.get("email") as string;
-
-	if (!email) redirect("/login?error=Email required");
-
+	if (!email) redirect("/access?error=Email required");
 	const { error } = await supabase.auth.signInWithOtp({
 		email,
 		options: {
@@ -17,9 +15,23 @@ export async function login(formData: FormData) {
 		},
 	});
 
-	if (error) redirect("/login?error=Auth failed");
+	if (error) {
+		redirect("/access?error=Auth failed")
+	};
 
-	redirect("/login?message=Check your email");
+	redirect("/access?link-sent=true");
+}
+
+export async function register(formData: FormData) {
+	const supabase = await createClient();
+	const firstName = formData.get("firstName") as string;
+	const lastName = formData.get("lastName") as string;
+	const phone = formData.get("phone") as string;
+	const major = formData.get("major") as string;
+
+
+	const {} = await si
+
 }
 
 export async function logout() {

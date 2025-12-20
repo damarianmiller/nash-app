@@ -9,10 +9,10 @@ interface ContainerProps extends BaseProps {
     crossAxisAlign: "start" | "center" | "end" | "stretch" | "baseline";
 }
 
-export default function Container({ children, className, flow, gap, mainAxisAlign, crossAxisAlign }: ContainerProps) {
+export default function Container({ children, className, style, flow, gap, mainAxisAlign, crossAxisAlign }: ContainerProps) {
     const classNames = "app-container" + (flow ? " flow-" + flow : "") + (gap ? " gap-" + gap : "") + (mainAxisAlign ? " main-axis-align-" + mainAxisAlign : "") + (crossAxisAlign ? " cross-axis-align-" + crossAxisAlign : "") + (className ? " " + className : "");
     return (
-        <div className={classNames}>
+        <div className={classNames} style={style}>
             {children}
         </div>
     );
