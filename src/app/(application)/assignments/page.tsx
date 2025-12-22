@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase"; // Use your new shared client
+import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/Container/Container";
 import { redirect } from "next/navigation";
 

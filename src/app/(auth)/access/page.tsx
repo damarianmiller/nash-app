@@ -3,42 +3,48 @@ import Container from "@/components/Container/Container";
 import Form from "@/components/Form/Form";
 import {Page} from "@/components/Form/Form";
 import * as Input from "@/components/Form/Input";
+
+
 import { login } from "../actions";
-import { useSearchParams } from "next/navigation";
+import { initialLoginState } from "./state";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
+function AwaitAuthAndContinue() {
+	const router = useRouter();
 
+	useEffect(() => {
+		let stopped = false;
+
+		const tick = async () => {
+			const res = await fetch("/session", { cache: "no-store" });
+			if (!res.ok) return;
+
+			const { authenticated } = await res.json();
+			if (authenticated && !stopped) {
+				// optional: small delay for animation
+				setTimeout(() => router.replace("/"), 800);
+			}
+		};
+		// check quickly, then every ~1s
+		tick();
+		const id = setInterval(tick, 1200);
+		return () => {
+			stopped = true;
+			clearInterval(id);
+		};
+	}, [router]);
+	return null;
+}
 
 
 export default function AccessPage() {
-	const searchParams = useSearchParams();
-	const newUser = searchParams.get("new-user");
-	const linkSent = searchParams.get("link-sent") === "true";
-	const emailParam = searchParams.get("email") || "";
+	const [loginState, loginAction, pending] = useActionState(login, initialLoginState);
 
-
-
-
-	if (newUser === "true") {
+	if (loginState.status === "waiting" || !loginState.status) {
 		return (
 			<Container flow="column" mainAxisAlign="center" crossAxisAlign="center" gap="xxl">
-				<h2>Welcome to Nash.</h2>
-				<p>It looks like this is your first time here. </p>
-			</Container>
-		);
-	} else if (newUser && newUser === "false") {
-		//redirect to home
-		window.location.href = "/";
-	} else if (linkSent) {
-		return (
-			<Container flow="column" mainAxisAlign="center" crossAxisAlign="center" gap="xxl">
-				<h2>Welcome to Nash.</h2>
-				<p>A sign-in link has been sent to your email{emailParam ? emailParam + "." : "."} Please check your inbox and click the link to continue.</p>
-			</Container>
-		);
-	} else {
-		return (
-			<Container flow="column" mainAxisAlign="center" crossAxisAlign="center" gap="xxl">
-				<Form submit={[["send", 20], "Continue"]} action={login}>
+				<Form submit={[["send", 20], pending ? "Sending ..." : "Continue"]} action={loginAction}>
 					<Page>
 						<h2>Welcome to Nash.</h2>
 					</Page>
@@ -47,6 +53,22 @@ export default function AccessPage() {
 						<Input.Email required={true} />
 					</Page>
 				</Form>
+			</Container>
+		);
+	} else if (loginState.status === "sent") {
+		return (
+			<Container flow="column" mainAxisAlign="center" crossAxisAlign="center" gap="m">
+				<AwaitAuthAndContinue />
+				<h2>Check your inbox</h2>
+				<p>{loginState.message}</p>
+			</Container>
+		);
+	} else if (loginState.status === "error") {
+		return (
+			<Container flow="column" mainAxisAlign="center" crossAxisAlign="center" gap="m">
+				<h2>Something went wrong</h2>
+				<p>{loginState.message}</p>
+				<p className="error-message">{loginState.error}</p>
 			</Container>
 		);
 	}

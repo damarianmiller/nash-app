@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: 'NovaRound';
+    src: url('/fonts/Nova_Round/NovaRound.ttf') format('truetype');
+}
+
+@font-face {
     font-family: 'Modak';
     src: url('/fonts/Modak/Modak.ttf') format('truetype');
 }
@@ -30,7 +35,7 @@
 
     --radius-theme: 0.75rem;
 
-    --font-theme: 'Modak', cursive;
+    --font-theme: 'NovaRound', cursive;
     --font-main: 'Unbounded', sans-serif;
 }
 
@@ -42,7 +47,7 @@
 html, body {
 
     font-family: var(--font-main);
-    font-size: 16px;
+    font-size: clamp(14px, 1.25vw, 18px);
 
     width: 100%;
     height: 100%;
@@ -72,6 +77,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     font-family: var(--font-theme);
     font-size: var(--size-xxl);
+    letter-spacing: -3.5px;
     font-weight: 800;
 }
 h2 {

@@ -1,38 +1,21 @@
 import { NextResponse } from "next/server";
-// Make sure this points to your NEW location from the cleanup
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
 	const { searchParams, origin } = new URL(request.url);
 	const code = searchParams.get("code");
 	const next = searchParams.get("next") ?? "/";
 
-	if (code) {
+	if (!code) {
+		return NextResponse.redirect(origin + "/access?error=missing_code");
+	} else if (code) {
 		const supabase = await createClient();
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
-		if (!error) {
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
 
-			if (user?.email) {
-				// 2. Check if they exist in your 'students' table
-				const { data: student } = await supabase
-					.from("students")
-					.select("id")
-					.eq("email", user.email)
-					.single();
-
-				// 3. If NOT found, force them to Register
-				if (!student) {
-					return NextResponse.redirect(`${origin}/access?new-user=true&email=${encodeURIComponent(user.email)}`);
-				}
-			}
-
-			// 4. Found them? Send them to dashboard
-			return NextResponse.redirect(`${origin}${next}`);
+		if (error) {
+			return NextResponse.redirect(origin + "/access?error=" + encodeURIComponent(error.message));
+		} else {
+			return NextResponse.redirect(origin + next);
 		}
 	}
-
-	return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }

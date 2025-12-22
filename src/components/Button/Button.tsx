@@ -1,6 +1,7 @@
 import "./Button.css";
 import BaseProps from "../props"
 import Icon from "../Icon/Icon";
+import Link from "next/link";
 
 interface ButtonProps extends BaseProps {
     label?: string,
@@ -25,11 +26,11 @@ export default function Button({
 }: ButtonProps) {
     const classNames = "app-button" + (className ? " " + className : "") + (size ? " size-" + size : "") + (active ? " active" : "") + (disabled ? " disabled" : "");
 
-    const anchorTag = (
-        <a className={classNames} href={href}>
+    const linkTag = (
+        <Link className={classNames} href={href}>
             {icon && <Icon icon={icon[0]} size={icon[1]} width={3} />}
             {label}
-        </a>
+        </Link>
     );
 
     const buttonTag = (
@@ -40,7 +41,7 @@ export default function Button({
     );
 
     if (href) {
-        return anchorTag;
+        return linkTag;
     } else {
         return buttonTag;
     }

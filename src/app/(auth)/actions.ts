@@ -1,42 +1,29 @@
 "use server";
+import { createClient } from "@/lib/supabase/server";
+import { LoginState } from "./access/state";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase";
-
-export async function login(formData: FormData) {
+export async function login(prevState: LoginState, formData: FormData): Promise<LoginState> {
 	const supabase = await createClient();
 	const email = formData.get("email") as string;
-	if (!email) redirect("/access?error=Email required");
-	const { error } = await supabase.auth.signInWithOtp({
+	const emailRedirectLink = process.env.NEXT_PUBLIC_SITE_URL + "/callback?next=/";
+
+	const { error, data } = await supabase.auth.signInWithOtp({
 		email,
 		options: {
-			emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/callback`,
+			emailRedirectTo: emailRedirectLink,
 		},
 	});
 
 	if (error) {
-		redirect("/access?error=Auth failed")
-	};
-
-	redirect("/access?link-sent=true");
-}
-
-export async function register(formData: FormData) {
-	const supabase = await createClient();
-	const firstName = formData.get("firstName") as string;
-	const lastName = formData.get("lastName") as string;
-	const phone = formData.get("phone") as string;
-	const major = formData.get("major") as string;
-
-
-	const {} = await si
-
-}
-
-export async function logout() {
-	const supabase = await createClient();
-	await supabase.auth.signOut();
-	revalidatePath("/", "layout");
-	redirect("/login");
+		return {
+			status: "error",
+			message: "There was an error sending the sign-in link.",
+			error: error.message,
+		};
+	} else {
+		return {
+			status: "sent",
+			message: "A sign-in link has been sent to " + email + ". Check your inbox to continue.",
+		};
+	}
 }

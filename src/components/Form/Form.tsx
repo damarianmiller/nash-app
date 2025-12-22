@@ -4,17 +4,19 @@ import BaseProps from "../props"
 
 import Container from "../Container/Container";
 import Button from "../Button/Button";
-import { Children, useState, isValidElement, ReactElement, cloneElement } from "react";
+import { default as FormElement } from "next/form";
+import { Children, useState, cloneElement } from "react";
 
 
 
 interface FormProps extends BaseProps {
     submit: [[string, number], string];
-    method?: "GET" | "POST";
-    action: any;
+    action?: any | undefined;
+    method?: "POST" | "GET" | "PUT" | "DELETE" | "PATCH" | undefined;
+    onSubmit?: any;
 }
 
-export default function Form({children, className, method, action, submit}: FormProps) {
+export default function Form({children, className, action, submit, method, onSubmit}: FormProps) {
     const classNames = "app-form" + (className ? " " + className : "");
     if (Children.toArray(children).filter(child => child.type != "input").length > 1) { //Check if direct children of the form are not inputs but pages or some other container.
         const [currentPage, setCurrentPage] = useState(0);
@@ -37,7 +39,7 @@ export default function Form({children, className, method, action, submit}: Form
             }
         }
         return (
-            <form className={classNames + " multi-page"} action={action} method={method}>  
+            <form className={classNames + " multi-page"} action={action} method={method} onSubmit={onSubmit}>  
                 {Children.toArray(children).map((child, index) => {
                     return cloneElement(child, {style: {display: index === currentPage ? "flex" : "none"}})
                 })}
@@ -47,7 +49,7 @@ export default function Form({children, className, method, action, submit}: Form
         );
     } else { //Single page form
         return (
-            <form className={classNames + " single-page"} action={action} method={method}>  
+            <form className={classNames + " single-page"} action={action} method={method} onSubmit={onSubmit}>  
                 {children}
                 <Container className="app-form-button-container" flow="row" mainAxisAlign="center" crossAxisAlign="center">
                     <Button type="submit" icon={submit[0]} label={submit[1]} />
