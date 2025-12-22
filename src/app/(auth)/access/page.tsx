@@ -7,33 +7,61 @@ import * as Input from "@/components/Form/Input";
 
 import { login } from "../actions";
 import { initialLoginState } from "./state";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 function AwaitAuthAndContinue() {
 	const router = useRouter();
+	const doneRef = useRef(false);
 
 	useEffect(() => {
-		let stopped = false;
+		let cancelled = false;
+		let intervalId: number | null = null;
 
-		const tick = async () => {
-			const res = await fetch("/session", { cache: "no-store" });
-			if (!res.ok) return;
-
-			const { authenticated } = await res.json();
-			if (authenticated && !stopped) {
-				// optional: small delay for animation
-				setTimeout(() => router.replace("/"), 800);
+		const stop = () => {
+			if (intervalId !== null) {
+				clearInterval(intervalId);
+				intervalId = null;
 			}
 		};
-		// check quickly, then every ~1s
+
+		const tick = async () => {
+			if (cancelled || doneRef.current) return;
+
+			// 1) Are we authenticated yet?
+			const sessionRes = await fetch("/session", { cache: "no-store" });
+			if (!sessionRes.ok) return;
+
+			const { authenticated } = await sessionRes.json();
+			if (!authenticated) return;
+
+			// Lock + stop polling immediately
+			doneRef.current = true;
+			stop();
+
+			// 2) Decide where to go next (registered vs onboarding)
+			const postAuthRes = await fetch("/post-auth", { cache: "no-store" });
+			if (!postAuthRes.ok) {
+				doneRef.current = false; // optional: allow retry
+				return;
+			}
+			const { next } = await postAuthRes.json();
+
+			// optional delay for animation
+			setTimeout(() => {
+				if (!cancelled) router.replace(next || "/");
+			}, 800);
+		};
+
 		tick();
-		const id = setInterval(tick, 1200);
+		intervalId = window.setInterval(tick, 1200);
+
 		return () => {
-			stopped = true;
-			clearInterval(id);
+			cancelled = true;
+			stop();
 		};
 	}, [router]);
+
 	return null;
 }
 
