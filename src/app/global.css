@@ -18,7 +18,7 @@
     --space-xs: 0.25rem;
     --space-s: 0.5rem;
     --space-m: 1rem;
-    --space-l: 2.25rem;
+    --space-l: 1.5rem;
     --space-xl: 3.5rem;
     --space-xxl: 5rem;
 
@@ -33,7 +33,7 @@
     --color-dark: #222;
     --color-light: #fff;
 
-    --radius-theme: 0.75rem;
+    --radius-theme: 1rem;
 
     --font-theme: 'NovaRound', cursive;
     --font-main: 'Unbounded', sans-serif;
@@ -96,7 +96,7 @@ h5 {
     font-size: var(--size-m);
     font-weight: 500;
 }
-h6 {
+h6, label {
     font-size: var(--size-m);
     font-weight: 700;
 }

@@ -12,11 +12,11 @@ const pages = [
     { icon: "apple", label: "Courses", href: "/courses" },
 ]
 
-export default function BottomBar() {
+export default function BottomBar({ id }: BottomBarProps) {
     return (
-        <nav className="app-bottombar">
-            {pages.map(page => (
-                <Button key={page.label} icon={[page.icon, 28]} href={page.href} size="m" active={usePathname() === page.href} />
+        <nav id={id} className="app-bottombar">
+            {pages.map((page, index) => (
+                <Button key={index} icon={[page.icon, 28]} href={page.href} active={usePathname() === page.href} />
             ))}
         </nav>
     )

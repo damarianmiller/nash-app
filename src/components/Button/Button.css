@@ -3,10 +3,12 @@ a.app-button, button.app-button {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: nowrap;
     gap: var(--space-xs);
 
     font-size: var(--size-m);
     font-weight: 700;
+
     color: var(--color-dark);
     background-color: var(--color-light);
 
@@ -27,7 +29,6 @@ a.app-button, button.app-button {
     &.stacked {
         flex-direction: column;
     }
-
     &:hover {
         cursor: pointer;
         
@@ -35,7 +36,6 @@ a.app-button, button.app-button {
 
         box-shadow: none;
     }
-
     &.active {
         translate: 3px 3px;
 

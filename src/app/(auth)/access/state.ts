@@ -1,13 +1,9 @@
-export type LoginState = {
-    status: "waiting" | "sent" | "success" |"error";
-    message: string;
-    error?: string;
-    fieldErrors?: {
-        email?: string;
-    }
+export type AuthenticationState = {
+    status: "awaitingInput" | "sent" | "success" |"error";
+    error: string | undefined;
 };
 
-export const initialLoginState: LoginState = {
-    status: "waiting",
-    message: "",
+export const initialAuthenticationState: AuthenticationState = {
+    status: "awaitingInput",
+    error: undefined,
 };

@@ -4,10 +4,11 @@ nav.app-bottombar {
     grid-area: bottombar;
     justify-content: center;
     align-items: center;
+    flex-wrap: nowrap;
     gap: var(--space-m);
 
     width: 100%;
     height: auto;
-    padding: var(--space-s) 0;
+    padding: var(--space-s);
     margin: 0;
 }

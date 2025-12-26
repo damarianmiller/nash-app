@@ -1,14 +1,11 @@
-
-
 form.app-form {
     &.single-page {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: var(--space-s);
-
 
         width: auto;
         height: auto;
@@ -26,7 +23,7 @@ form.app-form {
             "back-button progress next-button";
         gap: var(--space-s);
 
-        width: 100%;
+        width: auto;
         height: auto;
         padding: var(--space-s);
         margin: 0;

@@ -3,6 +3,7 @@ main.app-view {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-wrap: nowrap;
     grid-area: view;
 
     width: 100%;

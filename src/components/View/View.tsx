@@ -3,10 +3,9 @@ import BaseProps from "../props"
 
 interface ViewProps extends BaseProps {}
 
-export default function View({ children, className }: ViewProps) {
-    const classNames = "app-view" + (className ? " " + className : "");
+export default function View({ id, children }: ViewProps) {
     return (
-        <main className={classNames}>
+        <main id={id} className="app-view">
             {children}
         </main>
     );

@@ -1,6 +1,7 @@
 export default interface ComponentProps {
-    children?: React.ReactNode,
-    className?: string,
-    style?: React.CSSProperties,
-    size?: "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl",
+	children?: React.ReactNode;
+	id?: string;
+	className?: string;
+	style?: React.CSSProperties;
+	icon?: [string, number];
 }

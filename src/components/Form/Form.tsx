@@ -41,7 +41,7 @@ export default function Form({children, className, action, submit, method, onSub
         return (
             <form className={classNames + " multi-page"} action={action} method={method} onSubmit={onSubmit}>  
                 {Children.toArray(children).map((child, index) => {
-                    return cloneElement(child, {style: {display: index === currentPage ? "flex" : "none"}})
+                    return cloneElement(child, {id: index, className: "app-form-page", style: {display: index === currentPage ? "flex" : "none"}})
                 })}
                 <BackButton />
                 <NextButton />
@@ -57,16 +57,4 @@ export default function Form({children, className, action, submit, method, onSub
             </form>
         );
     }
-}
-
-interface PageProps extends BaseProps {
-}
-
-export function Page({ children, className, style }: PageProps) {
-    const classNames = "app-form-page" + (className ? " " + className : "");
-    return (
-        <Container className={classNames} flow="column" mainAxisAlign="start" crossAxisAlign="stretch" gap="s" style={style}>
-            {children}
-        </Container>
-    );
 }
