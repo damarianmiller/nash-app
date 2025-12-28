@@ -13,9 +13,10 @@ interface InputProps extends BaseProps {
     label: string;
     required: boolean;
     pattern?: string;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export default function Input({ id, className, name, icon, type, placeholder, value, label, required, pattern}: InputProps) {
+export default function Input({ id, className, name, icon, type, placeholder, value, label, required, pattern, onChange}: InputProps) {
     const classNames = "app-input" + (className ? " " + className : "");
     return (
         <fieldset id={id} className={classNames}>
@@ -28,6 +29,7 @@ export default function Input({ id, className, name, icon, type, placeholder, va
                 value={value}
                 required={required}
                 pattern={pattern}
+                onChange={onChange}
             />
         </fieldset>
     );
@@ -52,12 +54,12 @@ interface RadioProps extends Omit<InputProps, "type" | "placeholder" | "value" |
     radios: {label: string; value: string}[];
 }
 
-export function Radio({name, required, radios}: RadioProps) {
+export function Radio({name, required, radios, onChange}: RadioProps) {
     return (
         <>
             {radios.map((radio, index) => (
                 <Container key={index} flow="row" mainAxisAlign="start" crossAxisAlign="center" gap="s">
-                    <Input type="radio" name={name} value={radio.value} label={radio.label} placeholder="" required={required} />
+                    <Input type="radio" name={name} value={radio.value} label={radio.label} placeholder="" required={required} onChange={onChange} />
                 </Container>
             ))}
         </>

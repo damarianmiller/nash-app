@@ -1,5 +1,6 @@
 import "./global.css";
 import TopBar from "@/components/TopBar/TopBar";
+import Providers from "@/components/providers";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -8,8 +9,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <title>Nash App</title>
             </head>
             <body>
-                <TopBar title="Nash"/>
-                {children}
+                <Providers>
+                    <TopBar title="Nash"/>
+                    {children}
+                </Providers>
             </body>
         </html>
     );

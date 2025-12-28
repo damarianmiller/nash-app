@@ -4,9 +4,7 @@ import BaseProps from "../props"
 
 import Container from "../Container/Container";
 import Button from "../Button/Button";
-import { default as FormElement } from "next/form";
 import { Children, useState, cloneElement } from "react";
-
 
 
 interface FormProps extends BaseProps {
@@ -18,7 +16,9 @@ interface FormProps extends BaseProps {
 
 export default function Form({children, className, action, submit, method, onSubmit}: FormProps) {
     const classNames = "app-form" + (className ? " " + className : "");
-    if (Children.toArray(children).filter(child => child.type != "input").length > 1) { //Check if direct children of the form are not inputs but pages or some other container.
+    const pages = Children.toArray(children).filter(child => child.type != "input");
+
+    if (pages.length > 1) { //Check if direct children of the form are not inputs but pages or some other container.
         const [currentPage, setCurrentPage] = useState(0);
         function BackButton() {
             if (currentPage > 0) {
@@ -28,11 +28,11 @@ export default function Form({children, className, action, submit, method, onSub
             }
         }
         function NextButton() {
-            if (currentPage < Children.count(children) - 1) {
+            if (currentPage < pages.length - 1) {
                 return (
                     <Button type="button" className="app-form-next-button" icon={["arrow-right", 20]} label="Next" onClick={() => setCurrentPage(currentPage + 1)} />
                 )
-            } else if (currentPage === Children.count(children) - 1) {
+            } else if (currentPage === pages.length - 1) {
                 return (
                     <Button type="submit" className="app-form-next-button" icon={submit[0]} label={submit[1]} />
                 );
@@ -40,8 +40,8 @@ export default function Form({children, className, action, submit, method, onSub
         }
         return (
             <form className={classNames + " multi-page"} action={action} method={method} onSubmit={onSubmit}>  
-                {Children.toArray(children).map((child, index) => {
-                    return cloneElement(child, {id: index, className: "app-form-page", style: {display: index === currentPage ? "flex" : "none"}})
+                {pages.map((child, index) => {
+                    return cloneElement(child, {key: index, id: index, className: "app-form-page", style: {display: index === currentPage ? "flex" : "none"}})
                 })}
                 <BackButton />
                 <NextButton />
