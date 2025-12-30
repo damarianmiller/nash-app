@@ -4,6 +4,7 @@ div.app-container {
 
     &.flow-row {
         flex-direction: row;
+        flex-wrap: wrap;
     }
     &.flow-column {
         flex-direction: column;

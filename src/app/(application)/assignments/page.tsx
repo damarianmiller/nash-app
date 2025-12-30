@@ -1,23 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/Container/Container";
 import { redirect } from "next/navigation";
+import Button from "@/components/Button/Button";
 
 export default async function AssignmentsPage() {
-    // 1. Initialize Supabase
     const supabase = await createClient();
-
-    // 2. Get the User (Security Check)
-    // We double-check here even though Middleware did it, just to get the ID safely
     const { data: { user } } = await supabase.auth.getUser();
-
     if (!user) {
-        redirect("/login");
+        redirect("/access");
     }
-
-    // 3. Fetch Assignments
-    // We assume you have a foreign key linking 'assignments.student_id' to 'students.id'
-    // OR 'assignments.user_id' linked to auth.users. 
-    // Adjust the query below based on your actual table columns!
     const { data: assignments, error } = await supabase
         .from("assignments")
         .select("*")
@@ -25,12 +16,17 @@ export default async function AssignmentsPage() {
 
     if (error) {
         console.error("Error fetching assignments:", error);
-        return <div>Error loading assignments. Please try again.</div>;
     }
 
     return (
-        <Container flow="column" gap="m" mainAxisAlign="center" crossAxisAlign="center">
-            <h1>My Assignments</h1>
+        <Container flow="column" gap="m" mainAxisAlign="start" crossAxisAlign="start">
+            <Container flow="row" mainAxisAlign="space-between" crossAxisAlign="center" gap="s">
+                <h2>Assignments</h2>
+                <Container flow="row" mainAxisAlign="space-between" crossAxisAlign="center" gap="s">
+                    <Button icon={["list-filter", 20]} label="Filter" />
+                    <Button icon={["arrow-up-down", 20]} label="Sort" />
+                </Container>
+            </Container>
 
             {/* 4. Empty State */}
             {(!assignments || assignments.length === 0) && (
