@@ -1,0 +1,43 @@
+.app-wrapper {
+    display: flex;
+
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.flow-row {flex-direction: row;}
+.flow-column {flex-direction: column;}
+
+.wrap-wrap {flex-wrap: wrap;}
+.wrap-nowrap {flex-wrap: nowrap;}
+
+.main-axis-align-start {justify-content: flex-start;}
+.main-axis-align-center {justify-content: safe center;}
+.main-axis-align-end {justify-content: flex-end;}
+.main-axis-align-space-between {justify-content: space-between;}
+.main-axis-align-space-around {justify-content: space-around;}
+.main-axis-align-space-evenly {justify-content: space-evenly;}
+
+.cross-axis-align-start {align-items: flex-start;}
+.cross-axis-align-center {align-items: safe center;}
+.cross-axis-align-end {align-items: flex-end;}
+.cross-axis-align-stretch {align-items: stretch;}
+.cross-axis-align-baseline {align-items: baseline;}
+
+.gap-xxs {gap: var(--space-xxs);}
+.gap-xs {gap: var(--space-xs);}
+.gap-s {gap: var(--space-s);}
+.gap-m {gap: var(--space-m);}
+.gap-l {gap: var(--space-l);}
+.gap-xl {gap: var(--space-xl);}
+.gap-xxl {gap: var(--space-xxl);}
+
+.fill-width {
+    width: 100%;
+}
+
+.fill-height {
+    height: 100%;
+}

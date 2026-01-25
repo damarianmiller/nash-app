@@ -1,0 +1,20 @@
+.app-chip {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: safe center;
+    align-items: safe center;
+    gap: 0;
+
+    border-style: solid;
+    border-width: var(--border-thin);
+    border-color: var(--color-dark);
+    border-radius: var(--curve-circular);
+
+    font-weight: var(--weight-bold);
+
+    text-transform: capitalize;
+    white-space: nowrap;
+
+    padding: var(--space-xxs) var(--space-s);
+}

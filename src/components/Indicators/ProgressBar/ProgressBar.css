@@ -1,0 +1,41 @@
+.app-progressbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: stretch;
+    gap: 0;
+
+    overflow: hidden;
+
+    border-style: solid;
+    border-width: var(--border-thin);
+    border-radius: var(--curve-rounded);
+    border-color: var(--color-dark);
+
+    font-weight: var(--weight-bold);
+
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin: 0;
+
+    div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: safe center;
+        align-items: center;
+        gap: var(--space-xs);
+
+        white-space: nowrap;
+
+        border-right-style: solid;
+        border-right-width: 1.5px;
+        border-right-color: var(--color-dark);
+
+        height: 100%;
+        padding: var(--space-xxs);
+        margin: 0;
+    }
+}

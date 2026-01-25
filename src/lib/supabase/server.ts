@@ -1,7 +1,7 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
-export async function createClient() {
+export default async function createClient() {
 	const cookieStore = await cookies();
 
 	return createServerClient(
@@ -14,19 +14,14 @@ export async function createClient() {
 				},
 				setAll(cookiesToSet) {
 					try {
-						cookiesToSet.forEach(({ name, value, options }) =>
-							cookieStore.set(
-								name,
-								value,
-								options as CookieOptions
-							)
-						);
+						cookiesToSet.forEach(({ name, value, options }) => {
+							cookieStore.set(name, value, options);
+						});
 					} catch {
-						// setAll can be called from Server Components where cookies are read-only.
-						// If you have middleware/proxy refreshing sessions, you can ignore this. :contentReference[oaicite:5]{index=5}
+
 					}
 				},
 			},
-		}
+		},
 	);
 }
