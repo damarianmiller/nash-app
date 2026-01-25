@@ -1,0 +1,83 @@
+h1, h2, h3, h4, h5, h6, p, label, legend, input, button, a {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0;
+
+    position: static;
+
+    background-color: transparent;
+
+    border: none;
+
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 1;
+    direction: ltr;
+    letter-spacing: normal;
+    text-align: left;
+    text-decoration: none;
+    text-transform: none;
+    white-space: preserve-spaces;
+
+
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+
+h1, h2, h3, h4, h5, h6, label {
+    text-align: left;
+}
+
+h1 {
+    font-family: var(--font-theme);
+    font-weight: var(--weight-heavy);
+    font-size: var(--size-xxl);
+    letter-spacing: -3.5px;
+}
+h2 {
+    font-size: var(--size-xl);
+    font-weight: var(--weight-thick);
+}
+h3 {
+    font-size: var(--size-l);
+    font-weight: var(--weight-thick);
+}
+h4 {
+    font-size: var(--size-l);
+    font-weight: var(--weight-normal);
+}
+h5 {
+    font-size: var(--size-m);
+    font-weight: var(--weight-thick);
+}
+h6 {
+    font-size: var(--size-m);
+    font-weight: var(--weight-normal);
+}
+
+p {
+    font-size: var(--size-s);
+    font-weight: 400;
+}
+
+label {
+    white-space: nowrap;
+}
+
+
+
+.text-align-left {text-align: left;}
+.text-align-right {text-align: right;}
+.text-align-center {text-align: center;}
+
+.text-transform-uppercase {text-transform: uppercase;}
+.text-transform-lowercase {text-transform: lowercase;}
+.text-transform-capitalize {text-transform: capitalize;}

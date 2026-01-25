@@ -1,0 +1,31 @@
+nav.app-bottombar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--space-s);
+    grid-area: bottombar;
+    align-self: center;
+    justify-self: center;
+
+    position: fixed;
+    left: auto;
+    right: auto;
+    bottom: 0;
+
+    background-color: var(--color-light);
+
+    border-style: solid;
+    border-width: var(--outline-theme);
+    border-radius: var(--curve-circular);
+    border-color: var(--color-dark);
+
+    box-shadow: 1px 1px 5px var(--color-dark);
+
+    width: auto;
+    height: auto;
+    padding: var(--space-xs) var(--space-xl);
+    margin-bottom: var(--space-s);
+}

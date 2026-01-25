@@ -1,73 +1,79 @@
 import { createClient } from "@/lib/supabase/server";
-import Container from "@/components/Container/Container";
 import { redirect } from "next/navigation";
-import Button from "@/components/Button/Button";
 
-export default async function AssignmentsPage() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-        redirect("/access");
-    }
-    const { data: assignments, error } = await supabase
-        .from("assignments")
-        .select("*")
-        .order("due_date", { ascending: true });
+import Wrapper from "@/Components/Containers/Wrapper";
+import Button from "@/Components/Buttons/Button";
+import Chip from "@/Components/Containers/Chip/Chip";
+import Card from "@/Components/Containers/Card/Card";
+import ProgressBar from "@/Components/Indicators/ProgressBar/ProgressBar";
 
-    if (error) {
-        console.error("Error fetching assignments:", error);
-    }
 
+
+import {assignments} from "./assignments";
+import calculateAssignmentCompletionProgress from "./calcProgress";
+
+function AssignmentCard({ assignment }: any) {
+    const dueDate = new Date(assignment.due);
+    const dueDay = new Intl.DateTimeFormat("en-us", { day: "2-digit" }).format(dueDate);
+    const dueMonth = new Intl.DateTimeFormat("en-us", { month: "short" }).format(dueDate);
     return (
-        <Container flow="column" gap="m" mainAxisAlign="start" crossAxisAlign="start">
-            <Container flow="row" mainAxisAlign="space-between" crossAxisAlign="center" gap="s">
-                <h2>Assignments</h2>
-                <Container flow="row" mainAxisAlign="space-between" crossAxisAlign="center" gap="s">
-                    <Button icon={["list-filter", 20]} label="Filter" />
-                    <Button icon={["arrow-up-down", 20]} label="Sort" />
-                </Container>
-            </Container>
+        <Card flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="none" size="l" color="light">
+            <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="xl">
+                <Wrapper flow="column" wrap="wrap" xAlign="center" yAlign="center" gap="s">
+                    <h5>{dueMonth}</h5>
+                    <h5>{dueDay}</h5>
+                </Wrapper>
+                <Wrapper flow="column" wrap="wrap" xAlign="stretch" yAlign="start" gap="m" fill={true}>
+                    <Wrapper flow="row" wrap="wrap" xAlign="start" yAlign="center" gap="s">
+                        <Chip size="s" color={assignment.course.color}>
+                            <label>{assignment.course.code}</label>
+                        </Chip>
+                        <Chip size="s" color={assignment.type.color}>
+                            <label>{assignment.type.name}</label>
+                        </Chip>
+                    </Wrapper>
+                    <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="xs">
+                        <h5>{assignment.title}</h5>
+                        <p>{assignment.description}</p>
+                    </Wrapper>
+                    <ProgressBar size="xs" color={calculateAssignmentCompletionProgress(assignment).color} progress={calculateAssignmentCompletionProgress(assignment).progress} barText={calculateAssignmentCompletionProgress(assignment).label} />
+                </Wrapper>
+                <Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="s">
+                    <Button size="l" icon="arrow-right" href={"/assignments/" + assignment.id} />
+                </Wrapper>
+            </Wrapper>
+        </Card>
+    );
+}
 
-            {/* 4. Empty State */}
-            {(!assignments || assignments.length === 0) && (
-                <div style={{ padding: "2rem", textAlign: "center", background: "#f5f5f5", borderRadius: "8px" }}>
-                    <p>You have no assignments yet! Time to relax. 🏝️</p>
-                </div>
-            )}
-
-            {/* 5. The List */}
-            <div style={{ display: "grid", gap: "1rem" }}>
-                {assignments?.map((assignment) => (
-                    <div
-                        key={assignment.id}
-                        style={{
-                            border: "1px solid #ddd",
-                            padding: "1rem",
-                            borderRadius: "8px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center"
-                        }}
-                    >
-                        <div>
-                            <h3>{assignment.title}</h3>
-                            <p style={{ color: "#666", fontSize: "0.9rem" }}>
-                                Due: {new Date(assignment.due_date).toLocaleDateString()}
-                            </p>
-                        </div>
-                        <span style={{
-                            padding: "0.25rem 0.5rem",
-                            borderRadius: "4px",
-                            background: assignment.status === 'Completed' ? '#d4edda' : '#fff3cd',
-                            color: assignment.status === 'Completed' ? '#155724' : '#856404',
-                            fontSize: "0.8rem",
-                            fontWeight: "bold"
-                        }}>
-                            {assignment.status || 'Pending'}
-                        </span>
-                    </div>
-                ))}
-            </div>
-        </Container>
+export default function AssignmentsPage() {
+    return (
+        <Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="start" gap="m">
+            <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="s">
+                <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="xs">
+                    <h2>Assignments</h2>
+                    <Wrapper flow="row" wrap="wrap" xAlign="start" yAlign="center" gap="s">
+                        <p>Viewing all assignments.</p>
+                        <p>Sorted by due date.</p>
+                    </Wrapper>
+                </Wrapper>
+                <Wrapper flow="row" wrap="nowrap" xAlign="end" yAlign="center" gap="s">
+                    <Button size="m" icon="list-filter" />
+                    <Button size="m" icon="arrow-up-down" />
+                    <Button size="m" icon="plus" href="/assignments/create" />
+                </Wrapper>
+            </Wrapper>
+            <Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="start" gap="l">
+                {assignments ? (assignments.filter(assignment => true).sort().map((assignment, index) => {
+                    return (
+                        <AssignmentCard key={index} assignment={assignment}/>
+                    );
+                })) : (
+                    <>
+                        <p>No assignments to be found</p>
+                    </>
+                )}
+            </Wrapper>
+        </Wrapper>
     );
 }

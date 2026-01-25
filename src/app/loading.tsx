@@ -1,9 +1,8 @@
 import View from "@/Components/Containers/View/View";
-
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function Loading() {
     return (
         <View>
-            {children}
+            <p>Loading... :)</p>
         </View>
     );
 }

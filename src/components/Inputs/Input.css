@@ -1,0 +1,22 @@
+div.app-input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-s);
+
+    border-style: solid;
+    border-width: var(--border-width);
+    border-color: var(--border-color);
+    border-radius: var(--curve-rounded);
+
+    width: auto;
+    height: auto;
+    padding: var(--space-s);
+    margin: 0;
+
+    input {
+        padding: 0;
+    }
+}

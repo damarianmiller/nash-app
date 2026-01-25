@@ -1,0 +1,15 @@
+.app-view {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: safe center;
+    align-items: safe center;
+    grid-area: view;
+
+    overflow-y: scroll;
+    overflow-x: clip;
+
+    scrollbar-width: thin;
+
+    padding: var(--space-xl) var(--space-m) 5.75rem var(--space-m);
+}

@@ -1,0 +1,24 @@
+Components
+
+
+
+
+Text:
+---------
+font?
+size?
+weight?
+
+CHILD --> label
+
+
+Buttons:
+-------
+size?
+look
+icon?
+
+CHILD <-- label
+
+Images:
+-------
