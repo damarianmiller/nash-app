@@ -22,7 +22,7 @@
         border-color: var(--color-dark);
         border-radius: var(--curve-rounded);
 
-        padding: var(--space-m);
+        padding: var(--space-s);
         margin-right: 3px;
         margin-bottom: 3px;
 
@@ -37,6 +37,12 @@
     
             box-shadow: inset 3px 3px 0px var(--color-dark);
         }
+    }
+
+    &.varient-inline {
+        border: none;
+
+        padding: 0;
     }
 
     &.varient-slab {

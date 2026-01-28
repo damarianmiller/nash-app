@@ -55,7 +55,12 @@ function AuthenticationFlow() {
 function RegistrationFlow() {
 	return (
 		<>
-			hi
+			<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="xxl">
+				<Text tag="h2" align="center">Welcome Back!</Text>
+				<Text tag="h6" align="center">Your email has been verified.</Text>
+				<Text tag="h6" align="center">Proceed to your dashboard.</Text>
+				<Button size="m" icon="arrow-right" text="Go to Dashboard" />
+			</Wrapper>
 		</>
 	);
 }

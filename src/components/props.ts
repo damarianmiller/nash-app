@@ -66,12 +66,17 @@ export type FormProps = Omit<React.ComponentPropsWithoutRef<"form">, "action"> &
     action: string | (() => void);
 	process: process;
 }
+export type AccordionProps = Omit<React.ComponentPropsWithRef<"div">, "content"> & {
+    header: React.ReactNode;
+    content: React.ReactNode; 
+    defaultOpen?: boolean;
+}
 //--------------------------------------------------------------------------------------
 // BUTTON
 //--------------------------------------------------------------------------------------
 export type ButtonProps = // !!!!DONE!!!!
 | (React.ComponentPropsWithoutRef<"button"> & {
-    varient?: "theme" | "slab";
+    varient?: "theme" | "inline" | "slab";
     size: size;
     icon?: iconName;
     text?: string;
@@ -79,7 +84,7 @@ export type ButtonProps = // !!!!DONE!!!!
     active?: boolean;
 })
 | (React.ComponentPropsWithoutRef<"a"> & {
-    varient?: "theme" | "slab";
+    varient?: "theme" | "inline" | "slab";
     size: size;
     icon?: iconName;
     text?: string;

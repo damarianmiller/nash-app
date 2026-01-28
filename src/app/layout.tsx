@@ -24,7 +24,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </head>
             <body>
                 <Providers>
-                    <TopBar size="l" brand="Nash"/>
+                    <TopBar/>
                     {children}
                 </Providers>
             </body>
