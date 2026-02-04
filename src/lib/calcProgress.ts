@@ -1,7 +1,7 @@
 export default function calculateAssignmentCompletionProgress(assignment: any): {progress: string, label: string, color: string} {
     const currentDate = new Date();
-    const assignedDate = new Date(assignment.createdOn);
-    const dueDate = new Date(assignment.due);
+    const assignedDate = new Date(assignment.assigned_date);
+    const dueDate = new Date(assignment.due_date);
 
     let daysToComplete = Math.floor((dueDate.getTime() - assignedDate.getTime()) / (1000 * 60 * 60 * 24));
     let daysUntilDue = Math.floor((dueDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));

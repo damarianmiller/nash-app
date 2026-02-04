@@ -1,14 +1,15 @@
 import "./Card.css";
 import { CardProps } from "@/Components/Props";
 export default function Card(props: CardProps) {
-    const { flow, wrap, xAlign, yAlign, gap, fill, size, color, className, children, ...cardProps } = props;
+    const { flow, wrap, xAlign, yAlign, gap, fillHeight, fillWidth, size, color, className, children, ...cardProps } = props;
     let classNames = 
     "app-card" + 
     (className ? " " + className : "") + 
     (flow ? " flow-" + flow : "") + 
     (wrap ? " wrap-" + wrap : "") +
     (gap ? " gap-" + gap : "") + 
-    (fill ? " fill-width" : "") +
+    (fillWidth ? " fill-width" : "") +
+    (fillHeight ? " fill-height" : "") +
     (size ? " size-" + size : "") +
     (color ? " color-" + color : "");
 

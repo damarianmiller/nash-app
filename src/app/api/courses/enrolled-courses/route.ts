@@ -43,7 +43,7 @@ export async function GET() {
 		if (!terms.has(term)) {
 			terms.set(term, {
 				...enrollment.term,
-				courses: [],
+				courses: [] as Course[],
 			});
 		}
 

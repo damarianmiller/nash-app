@@ -24,6 +24,13 @@ type Term = {
 	courses: Course[];
 };
 
+type Institution = {
+	id: string;
+	name: string;
+	slug: string;
+	courses: Course[];
+}
+
 async function fetchJSON<T>(url: string): Promise<T> {
 	const res = await fetch(url);
 	const body = await res.json().catch(() => null);
@@ -68,14 +75,14 @@ export default function CoursesPage() {
 
 	const enrolledQuery = useQuery({
 		queryKey: ["courses", "enrolled"],
-		queryFn: () => fetchJSON<Term[]>("/api/enrolled-courses"),
+		queryFn: () => fetchJSON<Term[]>("/api/courses/enrolled-courses"),
 		enabled: viewCourses === "My courses", // only fetch when tab is active
 		staleTime: 1000 * 60 * 10, // 10 min "caching is fine"
 	});
 
 	const allCoursesQuery = useQuery({
 		queryKey: ["courses", "all"],
-		queryFn: () => fetchJSON<Course[]>("/api/all-courses"),
+		queryFn: () => fetchJSON<Institution[]>("/api/courses/all-courses"),
 		enabled: viewCourses === "All courses",
 		staleTime: 1000 * 60 * 10,
 	});
@@ -83,25 +90,28 @@ export default function CoursesPage() {
 	const activeQuery = viewCourses === "My courses" ? enrolledQuery : allCoursesQuery;
 
 	return (
-		<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="start" gap="xxl" fillHeight={true} fillWidth={true}>
-			<Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="s" fillWidth={true}>
-				<Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="xs">
-					<Text tag="h2">Courses</Text>
+		<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="start" gap="xxl" fillWidth fillHeight>
+			{/* Header Section */}
+			<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="m" fillWidth>
+				<Wrapper flow="row" wrap="nowrap" xAlign="center" yAlign="center" gap="xxl" fillWidth>
+					<Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="xs">
+						<Text tag="h2">Courses</Text>
+					</Wrapper>
+					<Wrapper flow="row" wrap="nowrap" xAlign="end" yAlign="center" gap="s">
+						<Button size="m" icon="search" />
+						<Button size="m" icon="plus" href="/courses/create" />
+					</Wrapper>
 				</Wrapper>
-				<Wrapper flow="row" wrap="nowrap" xAlign="end" yAlign="center" gap="s">
-					<Button size="m" icon="search" />
-					<Button size="m" icon="plus" href="/courses/create" />
-				</Wrapper>
+				<SegmentedController
+					options={[
+						{ label: "My courses", icon: "user" },
+						{ label: "All courses", icon: "list" },
+					]}
+					active={viewCourses}
+					onChange={(label: string) => setViewCourses(label as any)}
+				/>
 			</Wrapper>
-
-			<SegmentedController
-				options={[
-					{ label: "My courses", icon: "user" },
-					{ label: "All courses", icon: "list" },
-				]}
-				active={viewCourses}
-				onChange={(label: string) => setViewCourses(label as any)}
-			/>
+			{/* End Header Section */}
 
 			{/* status */}
 			{activeQuery.isLoading && <Text tag="p">Loading…</Text>}
@@ -109,7 +119,7 @@ export default function CoursesPage() {
 
 			{/* view: My courses */}
 			{viewCourses === "My courses" && activeQuery.isSuccess && (
-				<Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="m">
+				<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="start" gap="m">
 					{(enrolledQuery.data ?? []).map((term) => (
 						<Accordion
 							key={term.id}
@@ -130,12 +140,25 @@ export default function CoursesPage() {
 					))}
 				</Wrapper>
 			)}
-
 			{/* view: All courses */}
 			{viewCourses === "All courses" && activeQuery.isSuccess && (
-				<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="center" gap="m">
-					{(allCoursesQuery.data ?? []).map((course) => (
-						<CourseCard key={course.id} course={course} button="badge-plus" />
+				<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="start" gap="m">
+					{(allCoursesQuery.data ?? []).map((institution) => (
+						<Accordion
+							key={institution.id}
+							header={<Text tag="h3">{institution.name}</Text>}
+							content={
+								<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="center" gap="m" fillWidth={true}>
+									{institution.courses.length === 0 ? (
+										<Text tag="h6">No courses</Text>
+									) : (
+										institution.courses.map((course) => (
+											<CourseCard key={course.id} course={course} button="badge-plus" />
+										))
+									)}
+								</Wrapper>
+							}
+						/>
 					))}
 				</Wrapper>
 			)}

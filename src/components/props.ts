@@ -29,12 +29,6 @@ export const WeightHelper = {
 };
 type weight = keyof typeof WeightHelper;
 
-
-
-
-
-
-
 // CONTAINERS
 //--------------------------------------------------------------------------------------
 type DesignProps = {
@@ -115,7 +109,6 @@ export type TextProps =
         weight: weight;
         align?: "left" | "center" | "right";
 });
-
 
 
 export type InputProps = Omit<React.ComponentPropsWithRef<"input">, "size" | "name" | "type" | "placeholder" | "required"> & {

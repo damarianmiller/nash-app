@@ -1,4 +1,4 @@
-import { IconProps, SizeHelper } from "../Props";
+import { IconProps, SizeHelper } from "@/Components/Props";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 export default function Icon(props: IconProps) {

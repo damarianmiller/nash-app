@@ -1,6 +1,6 @@
 import View from "@/Components/Containers/View/View";
 import BottomBar from "@/Components/Containers/BottomBar/BottomBar";
-import supabase from "@/lib/supabase/client";
+import createClient from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 const pages = [
@@ -11,11 +11,16 @@ const pages = [
 
 
 export default async function ApplicationLayout({ children }: { children: React.ReactNode }) {
+        const supabase = await createClient();
         const { data: { user } } = await supabase.auth.getUser();
         console.log(user);
         if (!user) {
-           // redirect("/access");
+            redirect("/access");
         }
+
+
+        // RETURNING NULL ONLY ON THE / ROUTE. INVESTIGATE
+        
     return (
         <>
             <View>
