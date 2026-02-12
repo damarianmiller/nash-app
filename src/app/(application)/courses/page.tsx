@@ -1,12 +1,15 @@
 "use client";
 import Button from "@/Components/Buttons/Button";
 import SegmentedController from "@/Components/Buttons/SegmentedController/SegmentedController";
-import Text from "@/Components/Text/Text";
-import Wrapper from "@/Components/Containers/Wrapper";
+
+import { Row, Column} from "@/Components/Containers/Wrappers";
+
 import Accordion from "@/Components/Containers/Accordion/Accordion";
+import CourseCard from "@/Components/Containers/Cards/CourseCard/CourseCard";
+
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Card from "@/Components/Containers/Card/Card";
+import fetchJSON from "@/lib/fetchJSON";
 
 type Course = {
 	id: string;
@@ -31,44 +34,6 @@ type Institution = {
 	courses: Course[];
 }
 
-async function fetchJSON<T>(url: string): Promise<T> {
-	const res = await fetch(url);
-	const body = await res.json().catch(() => null);
-	if (!res.ok) {
-		const message =
-			(body && (body.error || body.message)) || `Request failed (${res.status})`;
-		throw new Error(message);
-	}
-	return body as T;
-}
-
-
-
-function CourseCard({ course, button }: { course: Course, button?: string }) {
-	return (
-		<Card flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="s" size="m" fillWidth={true}>
-			<Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="xl" fillWidth={true}>
-				<Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="s">
-					<Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="xl">
-						<Text tag="h6">{course.code}</Text>
-						<Text tag="p">{course.credit_hours} Credit Hours</Text>
-					</Wrapper>
-					<Text tag="h5">{course.title}</Text>
-				</Wrapper>
-
-
-				<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="s">
-					<Button size="l" icon={button} href={"/courses/" + course.id} />
-				</Wrapper>
-			</Wrapper>
-		</Card>
-	);
-}
-
-
-
-
-
 export default function CoursesPage() {
 	const [viewCourses, setViewCourses] = useState<"My courses" | "All courses">("My courses");
 	const currentTerm = "Spring 2026";
@@ -90,18 +55,18 @@ export default function CoursesPage() {
 	const activeQuery = viewCourses === "My courses" ? enrolledQuery : allCoursesQuery;
 
 	return (
-		<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="start" gap="xxl" fillWidth fillHeight>
-			{/* Header Section */}
-			<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="m" fillWidth>
-				<Wrapper flow="row" wrap="nowrap" xAlign="center" yAlign="center" gap="xxl" fillWidth>
-					<Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="xs">
-						<Text tag="h2">Courses</Text>
-					</Wrapper>
-					<Wrapper flow="row" wrap="nowrap" xAlign="end" yAlign="center" gap="s">
+		<>
+			<Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="l" fillWidth>
+				<Row wrap="wrap" mainAxis="space-around" crossAxis="center" gap="m" fillWidth>
+					<Column wrap="nowrap" mainAxis="start" crossAxis="center" gap="xs">
+						<h2>Courses</h2>
+					</Column>
+					<Column wrap="nowrap" mainAxis="end" crossAxis="center" gap="s">
 						<Button size="m" icon="search" />
 						<Button size="m" icon="plus" href="/courses/create" />
-					</Wrapper>
-				</Wrapper>
+					</Column>
+				</Row>
+
 				<SegmentedController
 					options={[
 						{ label: "My courses", icon: "user" },
@@ -110,58 +75,59 @@ export default function CoursesPage() {
 					active={viewCourses}
 					onChange={(label: string) => setViewCourses(label as any)}
 				/>
-			</Wrapper>
-			{/* End Header Section */}
+			</Column>
+			
 
 			{/* status */}
-			{activeQuery.isLoading && <Text tag="p">Loading…</Text>}
-			{activeQuery.isError && <Text tag="p">{(activeQuery.error as Error).message}</Text>}
+			{activeQuery.isLoading && <p>Loading…</p>}
+			{activeQuery.isError && <p>{(activeQuery.error as Error).message}</p>}
 
 			{/* view: My courses */}
 			{viewCourses === "My courses" && activeQuery.isSuccess && (
-				<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="start" gap="m">
+				<Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="m">
 					{(enrolledQuery.data ?? []).map((term) => (
 						<Accordion
 							key={term.id}
-							header={<Text tag="h3">{term.name}</Text>}
+							header={<h3>{term.name}</h3>}
 							content={
-								<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="center" gap="m" fillWidth={true}>
+								<Column wrap="nowrap" mainAxis="start" crossAxis="center" gap="m" fillWidth={true}>
 									{term.courses.length === 0 ? (
-										<Text tag="h6">No courses</Text>
+										<h6>No courses</h6>
 									) : (
 										term.courses.map((course) => (
 											<CourseCard key={course.id} course={course} button="arrow-right" />
 										))
 									)}
-								</Wrapper>
+								</Column>
 							}
-							defaultOpen={term.name === currentTerm}
+							isOpenByDefault={term.name === currentTerm}
 						/>
 					))}
-				</Wrapper>
+				</Column>
 			)}
 			{/* view: All courses */}
 			{viewCourses === "All courses" && activeQuery.isSuccess && (
-				<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="start" gap="m">
-					{(allCoursesQuery.data ?? []).map((institution) => (
+				<Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="m">
+					{(allCoursesQuery.data ?? []).map((institution, index) => (
 						<Accordion
 							key={institution.id}
-							header={<Text tag="h3">{institution.name}</Text>}
+							header={<h3>{institution.name}</h3>}
+							isOpenByDefault={index === 0}
 							content={
-								<Wrapper flow="column" wrap="nowrap" xAlign="stretch" yAlign="center" gap="m" fillWidth={true}>
+								<Column wrap="nowrap" mainAxis="start" crossAxis="center" gap="m" fillWidth={true}>
 									{institution.courses.length === 0 ? (
-										<Text tag="h6">No courses</Text>
+										<h6>No courses</h6>
 									) : (
 										institution.courses.map((course) => (
 											<CourseCard key={course.id} course={course} button="badge-plus" />
 										))
 									)}
-								</Wrapper>
+								</Column>
 							}
 						/>
 					))}
-				</Wrapper>
+				</Column>
 			)}
-		</Wrapper>
+		</>
 	);
 }

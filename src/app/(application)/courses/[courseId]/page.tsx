@@ -1,14 +1,14 @@
-import createClient from "@/lib/supabase/server";
-
-import { notFound } from "next/navigation";
-import Wrapper from "@/Components/Containers/Wrapper";
+import Wrapper from "@/Components/Containers/Wrappers";
 import Button from "@/Components/Buttons/Button";
 import Text from "@/Components/Text/Text";
 import Chip from "@/Components/Containers/Chip/Chip";
+import AssignmentCard from "@/Components/Containers/Cards/AssignmentCard/AssignmentCard";
 
+import createClient from "@/lib/supabase/server";
+import { notFound } from "next/navigation";
 import { isEnrolled } from "@/lib/auth/isEnrolled";
 import { getUser } from "@/lib/auth/getUser";
-import AssignmentCard from "@/Components/Specialty/AssignmentCard";
+
 
 
 export default async function CoursePage({
@@ -39,7 +39,7 @@ export default async function CoursePage({
         <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="xxl" fillHeight>
             <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
                 <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="s">
-                    <Chip>{course.code}</Chip>
+                    <Chip size="m">{course.code}</Chip>
                     <Text tag="h2">{course.title}</Text>
                     <p>{course.description}</p>
                 </Wrapper>
@@ -55,7 +55,7 @@ export default async function CoursePage({
 
             <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="m" fillWidth>
                 <Text tag="h3">Assignments</Text>
-                {assignments?.length > 0 && assignments.map((assignment, index) => (
+                {assignments && assignments.map((assignment, index) => (
                     <AssignmentCard key={index} assignment={assignment} />
                 ))}
 
@@ -65,7 +65,7 @@ export default async function CoursePage({
         <Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="l">
             <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
                 <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="s">
-                    <Chip>{course.code}</Chip>
+                    <Chip size="m">{course.code}</Chip>
                     <Text tag="h2">{course.title}</Text>
                 </Wrapper>
 

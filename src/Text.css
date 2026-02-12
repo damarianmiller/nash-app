@@ -1,14 +1,10 @@
-h1, h2, h3, h4, h5, h6, p, label, legend, input, button, a {
+h1, h2, h3, h4, h5, h6, p, label, legend, textarea, input, button, a {
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: safe center;
+    align-items: safe center;
     gap: 0;
-
-    position: static;
-
-    background-color: transparent;
 
     border: none;
 
@@ -23,7 +19,6 @@ h1, h2, h3, h4, h5, h6, p, label, legend, input, button, a {
     text-decoration: none;
     text-transform: none;
     white-space: preserve-spaces;
-
 
     width: auto;
     height: auto;
@@ -41,6 +36,7 @@ h1 {
     font-weight: var(--weight-heavy);
     font-size: var(--size-xxl);
     letter-spacing: -3.5px;
+    line-height: 0.85;
 }
 h2 {
     font-size: var(--size-xl);
@@ -65,14 +61,12 @@ h6 {
 
 p {
     font-size: var(--size-s);
-    font-weight: 400;
+    font-weight: var(--weight-normal);
 }
 
 label {
     white-space: nowrap;
 }
-
-
 
 .text-align-left {text-align: left;}
 .text-align-right {text-align: right;}

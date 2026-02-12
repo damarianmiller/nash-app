@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/Components/Buttons/Button";
 import Text from "@/Components/Text/Text";
-import Wrapper from "@/Components/Containers/Wrapper";
+import Wrapper from "@/Components/Containers/Wrappers";
 import Form from "@/Components/Forms/Form";
 import * as Input from "@/Components/Inputs/Input";
 import { useActionState } from "react";
@@ -52,27 +52,27 @@ function AuthenticationFlow() {
 	return null;
 }
 
-function RegistrationFlow() {
+function RegistrationFlow({ student }: { student?: any }) {
 	return (
 		<>
-			<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="xxl">
-				<Text tag="h2" align="center">Welcome Back!</Text>
+			<Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="xl" fillWidth fillHeight>
+				<Text tag="h2" align="center">Welcome Back, {student.first_name}</Text>
 				<Text tag="h6" align="center">Your email has been verified.</Text>
 				<Text tag="h6" align="center">Proceed to your dashboard.</Text>
-				<Button size="m" icon="arrow-right" text="Go to Dashboard" />
+				<Button size="m" icon="arrow-right" text="Go to Dashboard" href="/"/>
 			</Wrapper>
 		</>
 	);
 }
 
-export default function AccessPage({ user }: { user: any | null }) {
+export default function AccessPage({ user, student }: { user: any | null, student: any | null }) {
 	if (!user) {
 		return (
 			<AuthenticationFlow></AuthenticationFlow>
 		);
 	} else if (user) {
 		return (
-			<RegistrationFlow></RegistrationFlow>
+			<RegistrationFlow student={student}></RegistrationFlow>
 		);
 	}
 	

@@ -1,11 +1,9 @@
 .app-card {
-    display: flex;
-
     background-color: var(--color-light-grey);
 
     border-radius: var(--curve-rounded);
 
-    box-shadow: inset 0px 0px 2.5px #555;
+    box-shadow: inset 0px 0px 2px var(--color-dark-grey);
 
-    padding: var(--space-xl);
+    padding: var(--space-l) var(--space-xl);
 }

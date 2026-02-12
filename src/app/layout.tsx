@@ -1,4 +1,6 @@
 import "@/global.css";
+import "@/theme.css";
+import "@/Text.css";
 import Providers from "@/Components/Providers/Providers";
 import TopBar from "@/Components/Containers/TopBar/TopBar";
 

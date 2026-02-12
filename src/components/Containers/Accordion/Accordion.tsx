@@ -1,26 +1,23 @@
 "use client";
-import "./Accordion.css";
-import { AccordionProps } from "@/Components/Props";
+import { AccordionProps } from "@/Components/Types";
+import { Row, Column } from "@/Components/Containers/Wrappers";
 import Button from "@/Components/Buttons/Button";
-import Text from "@/Components/Text/Text";
 import { useState } from "react";
 
-
-
 export default function Accordion(props: AccordionProps) {
-    const { header, content, children, defaultOpen, ...accordionProps } = props;
-    const classNames = "app-accordion";
-    const [open, setOpen] = useState(defaultOpen ?? false);
+    const { header, content, isOpenByDefault, className, children, ...accordionProps } = props;
+    const classNames =
+        "app-accordion" +
+        (className ? " " + className : "");
 
+    const [isOpen, setIsOpen] = useState(isOpenByDefault ?? false);
     return (
-        <div className={classNames}>
-            <div className="app-accordion-header" onClick={() => setOpen(!open)}>
-                <Button size="m" icon={open ? "panel-top-close" : "panel-top-open"} varient="inline" onClick={() => setOpen(!open)} />
+        <Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="s" {...accordionProps} className={classNames}>
+            <Row as="header" wrap="nowrap" mainAxis="start" crossAxis="center" gap="s">
+                <Button size="m" onClick={() => setIsOpen(!isOpen)}></Button>
                 {header}
-            </div>
-            <div className="app-accordion-content">
-                {open && content}
-            </div>
-        </div>
+            </Row>
+            {isOpen && content}
+        </Column>
     );
 }

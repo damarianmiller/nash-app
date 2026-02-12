@@ -1,7 +1,7 @@
 import "./ProgressBar.css";
-import { ProgressBarProps } from "@/Components/Props";
-import Container from "@/Components/Containers/Wrapper";
-import Text from "@/Components/Text/Text";
+import { ProgressBarProps } from "@/Components/Types";
+import Container from "@/Components/Containers/Wrappers";
+
 
 export default function ProgressBar(props: ProgressBarProps) {
     const { size, caption, color, progress, barText, className, ...progressBarProps } = props;
@@ -14,7 +14,7 @@ export default function ProgressBar(props: ProgressBarProps) {
     return (
         <div {...progressBarProps} className={classNames}>
             <div className={color ? " color-" + color : ""} style={barStyles}>
-                <Text size={size} weight="heavy" tag="label">{barText}</Text>
+                <label>{barText}</label>
             </div>
         </div>
     );

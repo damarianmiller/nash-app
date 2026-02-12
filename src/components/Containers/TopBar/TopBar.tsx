@@ -1,24 +1,29 @@
-import "./TopBar.css";
-import { TopBarProps } from "@/Components/Props";
+import { TopBarProps } from "@/Components/Types";
+
 import Button from "@/Components/Buttons/Button";
-import Container from "@/Components/Containers/Wrapper";
-import Text from "@/Components/Text/Text";
+import { Row } from "@/Components/Containers/Wrappers";
+import Grid from "@/Components/Containers/Grid";
+import Frame from "@/Components/Containers/Frame";
 
 export default function TopBar(props: TopBarProps) {
     const { className, ...topBarProps } = props;
-    const classNames = "app-topbar" + (className ? " " + className : "");
+    const classNames =
+        "app-topbar" +
+        (className ? " " + className : "");
 
     return (
-        <header {...topBarProps} className={classNames}>
-            <Container flow="row" wrap="nowrap" xAlign="start" yAlign="center" gap="none">
-                {false && <Button size="m" curve="circular" icon="arrow-left" href="../"/>}
-            </Container>
-            <Container flow="row" wrap="nowrap" xAlign="center" yAlign="center" gap="none">
-                <Text tag="h1" className="app-topbar-brand">Nash</Text>
-            </Container>
-            <Container flow="row" wrap="nowrap" xAlign="end" yAlign="center" gap="none">
-                {false && <Button size="m" curve="circular" icon="user" />}
-            </Container>
-        </header>
+        <Frame as="header" px="m" py="xxs" fillWidth>
+            <Grid {...topBarProps} className={classNames} columns={3} gap="none" fillWidth>
+                <Row wrap="nowrap" mainAxis="start" crossAxis="center" gap="none">
+                    {false && <Button size="m" icon="arrow-left" href="../" />}
+                </Row>
+                <Row wrap="nowrap" mainAxis="center" crossAxis="center" gap="none">
+                    <h1>Nash</h1>
+                </Row>
+                <Row wrap="nowrap" mainAxis="end" crossAxis="center" gap="none">
+                    {false && <Button size="m" icon="user" />}
+                </Row>
+            </Grid>
+        </Frame>
     );
 }

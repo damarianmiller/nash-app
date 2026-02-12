@@ -1,5 +1,5 @@
 import "./Chip.css";
-import { ChipProps } from "@/Components/Props";
+import { ChipProps } from "@/Components/Types";
 
 export default function Chip(props: ChipProps) {
     const { size, color, className, children, ...chipProps } = props;

@@ -1,0 +1,13 @@
+.daySelector {
+    .app-button {
+        background-color: var(--color-light-grey);
+        border-radius: var(--curve-circular);
+        padding: var(--space-m) var(--space-l) !important;
+
+        &.active {
+            border-style: solid;
+            border-width: var(--border-normal);
+            border-color: var(--color-dark);
+        }
+    }
+}

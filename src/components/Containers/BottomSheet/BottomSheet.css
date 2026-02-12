@@ -1,0 +1,39 @@
+.app-bottomsheet-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 100;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    width: 100%;
+    height: 100%;
+
+    &.hidden {
+        display: none;
+    }
+}
+.app-bottomsheet-content {
+    position: fixed;
+    z-index: 1001;
+    left: var(--space-m);
+    right: var(--space-m);
+    bottom: 0;
+
+    background-color: var(--color-light);
+
+    border-radius: var(--curve-rounded);
+
+    width: auto;
+    height: 75%;
+    padding: var(--space-xl);
+    margin: 0;
+    
+    &.hidden {
+        height: 0;
+        padding: 0 var(--space-xl);
+    }
+}

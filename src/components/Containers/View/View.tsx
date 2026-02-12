@@ -1,9 +1,11 @@
 import "./View.css";
-import { ViewProps } from "@/Components/Props"
+import { ViewProps } from "@/Components/Types"
 
 export default function View(props: ViewProps) {
     const { className, children, ...viewProps } = props;
-    const classNames = "app-view" + (className ? " " + className : "");
+    const classNames =
+        "app-view" +
+        (className ? " " + className : "");
 
     return (
         <main {...viewProps} className={classNames}>

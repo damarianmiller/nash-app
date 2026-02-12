@@ -13,14 +13,9 @@ const pages = [
 export default async function ApplicationLayout({ children }: { children: React.ReactNode }) {
         const supabase = await createClient();
         const { data: { user } } = await supabase.auth.getUser();
-        console.log(user);
         if (!user) {
             redirect("/access");
         }
-
-
-        // RETURNING NULL ONLY ON THE / ROUTE. INVESTIGATE
-        
     return (
         <>
             <View>

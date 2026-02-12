@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'NovaRound';
+    src: url('/fonts/Nova_Round/NovaRound.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Modak';
+    src: url('/fonts/Modak/Modak.ttf') format('truetype');
+}
+
+:root {
+    --font-theme: 'NovaRound', cursive;
+    --font-main: 'Unbounded', sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-dark: #222;
+        --color-light: #fff;
+        --color-light-grey: #eee;
+        --color-dark-grey: #ddd;
+
+        --color-red: rgb(229, 95, 95);
+        --color-orange: #f48d48;
+        --color-yellow: #ebc83e;
+        --color-green: #8ecc65;
+        --color-blue: #549cdb;
+        --color-pink: #f075b9;
+        --color-purple: #b754e5;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-light: #fff;
+        --color-dark: #1b1b1b;
+        --color-light-grey: #ccc;
+        --color-dark-grey: #999;
+
+        --color-red: rgb(212, 78, 78);
+        --color-orange: #c76b2d;
+        --color-yellow: #c8a92f;
+        --color-green: #62983e;
+        --color-blue: #3a89cd;
+    }
+}
+
+:root {
+    --space-xxs: 0.125rem;
+    --space-xs: 0.25rem;
+    --space-s: 0.375rem;
+    --space-m: 0.5rem;
+    --space-l: 0.75rem;
+    --space-xl: 1rem;
+    --space-xxl: 2rem;
+
+    --size-xxs: 0.5rem;
+    --size-xs: 0.75rem;
+    --size-s: 1rem;
+    --size-m: 1.25rem;
+    --size-l: 1.5rem;
+    --size-xl: 1.75rem;
+    --size-xxl: 2rem;
+
+    --weight-thin: 200;
+    --weight-light: 300;
+    --weight-normal: 500;
+    --weight-heavy: 700;
+    --weight-thick: 800;
+
+    --curve-circular: 5rem;
+    --curve-rounded: 0.75rem;
+
+    --border-thin: 0.125rem;
+    --border-normal: 0.3rem;
+    --border-thick: 0.5rem;
+}

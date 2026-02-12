@@ -3,10 +3,8 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
-    gap: var(--space-l);
-
-    box-shadow: 1px 1px 5px var(--color-dark-grey);
+    align-items: stretch;
+    gap: var(--space-xl);
 
     border-radius: var(--curve-rounded);
 
@@ -14,4 +12,8 @@
     height: auto;
     padding: var(--space-xl);
     margin: 0;
+
+    .app-button {
+        align-self: center;
+    }
 }
