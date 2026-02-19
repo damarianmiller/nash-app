@@ -1,5 +1,6 @@
 import "./View.css";
 import { ViewProps } from "@/Components/Types"
+import { Column } from "@/Components/Containers/Wrappers";
 
 export default function View(props: ViewProps) {
     const { className, children, ...viewProps } = props;
@@ -8,8 +9,8 @@ export default function View(props: ViewProps) {
         (className ? " " + className : "");
 
     return (
-        <main {...viewProps} className={classNames}>
-            { children }
-        </main>
+        <Column {...viewProps} className={classNames} as="main" wrap="nowrap" mainAxis="start" crossAxis="center" gap="xxl" fillWidth fillHeight>
+            {children}
+        </Column>
     );
 }

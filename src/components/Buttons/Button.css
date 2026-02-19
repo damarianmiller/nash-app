@@ -1,51 +1,36 @@
 .app-button {
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-xs);
-
     font-weight: var(--weight-thick);
-
     cursor: pointer;
 
-    * {
-        cursor: pointer;
-    }
+    &.variant-push {
+        --extruded-length: 2px;
 
-    &.varient-theme {
         background-color: var(--color-light);
 
-        box-shadow: 3px 3px 0px var(--color-dark);
-
         border-style: solid;
-        border-width: var(--border-normal);
         border-color: var(--color-dark);
+        border-width: 3px;
         border-radius: var(--curve-rounded);
 
         padding: var(--space-s);
-        margin-right: 3px;
-        margin-bottom: 3px;
 
-        &:hover {    
-            translate: 3px 3px;
-    
-            box-shadow: none;
+        filter: drop-shadow(var(--extruded-length) var(--extruded-length) 0px var(--color-dark));
+        margin-right: var(--extruded-length);
+        margin-bottom: var(--extruded-length);
+
+        &:hover {
+            translate: var(--extruded-length) var(--extruded-length);
+            filter: none;
         }
-    
         &.active {
-            translate: 3px 3px;
-    
-            box-shadow: inset 3px 3px 0px var(--color-dark);
+            translate: var(--extruded-length) var(--extruded-length);
+            filter: none;
+            box-shadow: inset var(--extruded-length) var(--extruded-length) 0px var(--color-dark);
         }
     }
 
-    &.varient-inline {
-        border: none;
 
-        padding: 0;
-    }
-
-    &.varient-slab {
+    &.variant-slab {
         background-color: transparent;
 
         border-radius: var(--curve-circular);

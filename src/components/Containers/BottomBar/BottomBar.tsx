@@ -3,16 +3,20 @@ import "./BottomBar.css";
 import { BottomBarProps } from "@/Components/Types";
 import Button from "@/Components/Buttons/Button";
 import { usePathname } from "next/navigation";
+import { Row } from "@/Components/Containers/Wrappers";
 
 export default function BottomBar(props: BottomBarProps) {
     const { pages, className, ...bottomBarProps } = props;
-    const classNames = "app-bottombar" + (className ? " " + className : "");
+
+    const classNames =
+        "app-bottombar" +
+        (className ? " " + className : "");
 
     return (
-        <nav {...bottomBarProps} className={classNames}>
+        <Row {...bottomBarProps} className={classNames} as="nav" wrap="nowrap" mainAxis="center" crossAxis="center" gap="s" fillWidth>
             {pages.map((page, index) => (
-                <Button key={index} size="m" icon={page.icon} href={page.href} active={(usePathname() === page.href)} />
+                <Button key={index} size="m" icon={page.icon} href={page.href} variant="push" active={(usePathname() === page.href)} />
             ))}
-        </nav>
+        </Row>
     );
 }

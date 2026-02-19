@@ -1,7 +1,6 @@
 import Card from "@/Components/Containers/Cards/Card";
-import Wrapper from "@/Components/Containers/Wrappers";
+import { Row, Column } from "@/Components/Containers/Wrappers";
 import Button from "@/Components/Buttons/Button";
-import Text from "@/Components/Text/Text";
 
 type Course = {
     id: string;
@@ -11,19 +10,19 @@ type Course = {
 }
 export default function CourseCard({ course, button }: { course: Course, button?: string }) {
     return (
-        <Card size="m">
-            <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="xl" fillWidth={true}>
-                <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="center" gap="s">
-                    <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="xl">
-                        <Text tag="h6">{course.code}</Text>
-                        <Text tag="p">{course.credit_hours} Credit Hours</Text>
-                    </Wrapper>
-                    <Text tag="h5">{course.title}</Text>
-                </Wrapper>
-                <Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="s">
-                    <Button size="l" icon={button} href={"/courses/" + course.id} />
-                </Wrapper>
-            </Wrapper>
+        <Card>
+            <Row wrap="nowrap" mainAxis="space-between" crossAxis="center" gap="xl" fillWidth>
+                <Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="s">
+                    <Row wrap="nowrap" mainAxis="start" crossAxis="center" gap="xl">
+                        <h6>{course.code}</h6>
+                        <p>{course.credit_hours} Credit Hours</p>
+                    </Row>
+                    <h5>{course.title}</h5>
+                </Column>
+                <Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="s">
+                    <Button size="l" icon={button} variant="push" href={"/courses/" + course.id} />
+                </Column>
+            </Row>
         </Card>
     );
 }

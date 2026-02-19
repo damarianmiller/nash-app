@@ -1,39 +1,28 @@
-.app-bottomsheet-backdrop {
-    position: absolute;
-    top: 0;
+.app-bottomsheet {
+    position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    width: auto;
 
     z-index: 100;
 
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--color-light);
+    border-radius: var(--curve-rounded);
+    filter: drop-shadow(0px -2px 20px var(--color-dark));
 
-    width: 100%;
-    height: 100%;
-
-    &.hidden {
-        display: none;
+    header {
+        padding: var(--space-l);
     }
 }
-.app-bottomsheet-content {
+
+.app-bottomsheet-backdrop {
     position: fixed;
-    z-index: 1001;
-    left: var(--space-m);
-    right: var(--space-m);
-    bottom: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 
-    background-color: var(--color-light);
-
-    border-radius: var(--curve-rounded);
-
-    width: auto;
-    height: 75%;
-    padding: var(--space-xl);
-    margin: 0;
-    
-    &.hidden {
-        height: 0;
-        padding: 0 var(--space-xl);
-    }
+    background-color: rgba(0, 0, 0, 0.3);
 }

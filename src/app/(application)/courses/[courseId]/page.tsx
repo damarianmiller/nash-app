@@ -1,6 +1,5 @@
-import Wrapper from "@/Components/Containers/Wrappers";
+import { Row, Column } from "@/Components/Containers/Wrappers";
 import Button from "@/Components/Buttons/Button";
-import Text from "@/Components/Text/Text";
 import Chip from "@/Components/Containers/Chip/Chip";
 import AssignmentCard from "@/Components/Containers/Cards/AssignmentCard/AssignmentCard";
 
@@ -36,45 +35,45 @@ export default async function CoursePage({
     const isEnrolledInCourse = await isEnrolled(await getUser(), course);
 
     return (isEnrolledInCourse ? (
-        <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="xxl" fillHeight>
-            <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
-                <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="s">
+        <Column wrap="nowrap" xAlign="start" yAlign="start" gap="xxl" fillHeight>
+            <Row wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
+                <Column wrap="nowrap" xAlign="start" yAlign="start" gap="s">
                     <Chip size="m">{course.code}</Chip>
-                    <Text tag="h2">{course.title}</Text>
+                    <h2>{course.title}</h2>
                     <p>{course.description}</p>
-                </Wrapper>
+                </Column>
                 
-                <Wrapper flow="row" wrap="wrap" xAlign="end" yAlign="center" gap="s">
+                <Row wrap="wrap" xAlign="end" yAlign="center" gap="s">
                     <Button size="m" icon="flag" />
                     <Button size="m" icon="door-open" />
-                </Wrapper>
-            </Wrapper>
+                </Row>
+            </Row>
             
 
 
 
-            <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="m" fillWidth>
-                <Text tag="h3">Assignments</Text>
+            <Column wrap="nowrap" xAlign="start" yAlign="start" gap="m" fillWidth>
+                <h3>Assignments</h3>
                 {assignments && assignments.map((assignment, index) => (
                     <AssignmentCard key={index} assignment={assignment} />
                 ))}
 
-            </Wrapper>
-        </Wrapper>
+            </Column>
+        </Column>
     ) : (
-        <Wrapper flow="column" wrap="nowrap" xAlign="center" yAlign="center" gap="l">
-            <Wrapper flow="row" wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
-                <Wrapper flow="column" wrap="nowrap" xAlign="start" yAlign="start" gap="s">
+        <Column wrap="nowrap" xAlign="center" yAlign="center" gap="l">
+            <Row wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
+                <Column wrap="nowrap" xAlign="start" yAlign="start" gap="s">
                     <Chip size="m">{course.code}</Chip>
-                    <Text tag="h2">{course.title}</Text>
-                </Wrapper>
+                    <h2>{course.title}</h2>
+                </Column>
 
-                <Wrapper flow="row" wrap="nowrap" xAlign="end" yAlign="center" gap="xs">
+                <Row wrap="nowrap" xAlign="end" yAlign="center" gap="xs">
                     <Button size="m" icon="flag"/>
                     <Button size="m" icon="badge-plus" />
-                </Wrapper>
-            </Wrapper>
+                </Row>
+            </Row>
             <p>{course.description}</p>
-        </Wrapper>
+        </Column>
     ));
 }

@@ -1,14 +1,5 @@
-nav.app-bottombar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: var(--space-s);
+.app-bottombar {
     grid-area: bottombar;
-    align-self: center;
-    justify-self: center;
 
     position: fixed;
     left: auto;
@@ -26,6 +17,6 @@ nav.app-bottombar {
 
     width: auto;
     height: auto;
-    padding: var(--space-xs) var(--space-xl);
+    padding: var(--space-xs) var(--space-l);
     margin-bottom: var(--space-s);
 }

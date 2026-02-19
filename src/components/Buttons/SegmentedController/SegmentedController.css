@@ -1,11 +1,4 @@
 .app-segmented-controller {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-s);
-
     overflow: clip;
 
     background-color: var(--color-dark-grey);
@@ -14,9 +7,4 @@
     border-width: var(--border-normal);
     border-color: var(--color-dark);
     border-radius: var(--curve-circular);
-
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0;
 }

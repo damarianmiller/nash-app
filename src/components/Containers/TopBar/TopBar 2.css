@@ -1,0 +1,5 @@
+.app-topbar {
+    grid-area: topbar;
+
+    padding: var(--space-xxs) 0;
+}

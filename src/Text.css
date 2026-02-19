@@ -6,7 +6,10 @@ h1, h2, h3, h4, h5, h6, p, label, legend, textarea, input, button, a {
     align-items: safe center;
     gap: 0;
 
-    border: none;
+    border-style: none;
+    border-width: 0px;
+    border-color: transparent;
+    border-radius: 0;
 
     color: inherit;
     font-family: inherit;
@@ -64,9 +67,6 @@ p {
     font-weight: var(--weight-normal);
 }
 
-label {
-    white-space: nowrap;
-}
 
 .text-align-left {text-align: left;}
 .text-align-right {text-align: right;}

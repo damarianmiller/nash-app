@@ -8,7 +8,7 @@
 
 	transition-property: all;
 	transition-timing-function: ease-in-out;
-	transition-duration: 150ms;
+	transition-duration: 225ms;
 }
 
 *[hidden=""], .hidden, head, link, meta, script, style {
@@ -42,8 +42,8 @@ body {
 	grid-template-areas: "topbar"
 						 "view"
 						 "bottombar";
-	justify-items: stretch;
-	align-items: stretch;
+	justify-items: center;
+	align-items: center;
 	gap: 0;
 
 	color: var(--color-dark);
@@ -55,7 +55,7 @@ body {
 	padding: 0;
 }
 
-main, header, footer, section, article, div, span {
+main, header, footer, nav, section, article, div, span {
 	display: flex;
 
 	scrollbar-width: thin;
@@ -105,6 +105,23 @@ main, header, footer, section, article, div, span {
 .cross-axis-align-end {align-items: flex-end;}
 .cross-axis-align-stretch {align-items: stretch;}
 .cross-axis-align-baseline {align-items: baseline;}
+
+.justify-items-start {justify-items: flex-start;}
+.justify-items-center {justify-items: safe center;}
+.justify-items-end {justify-items: flex-end;}
+.justify-items-stretch {justify-items: stretch;}
+
+
+.justify-self-start {justify-self: flex-start;}
+.justify-self-center {justify-self: safe center;}
+.justify-self-end {justify-self: flex-end;}
+.justify-self-stretch {justify-self: stretch;}
+
+.align-self-start {align-self: flex-start;}
+.align-self-center {align-self: safe center;}
+.align-self-end {align-self: flex-end;}
+.align-self-stretch {align-self: stretch;}
+.align-self-baseline {align-self: baseline;}
 
 .gap-xxs {gap: var(--space-xxs);}
 .gap-xs {gap: var(--space-xs);}

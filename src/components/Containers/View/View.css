@@ -1,15 +1,6 @@
 .app-view {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: start;
-    align-items: safe center;
-    grid-area: view;
-    gap: var(--space-xxl);
-
     overflow-y: scroll;
     overflow-x: clip;
 
-    width: 100%;
-    height: 100%;
     padding: var(--space-xxl) var(--space-l) 5.75rem var(--space-l);
 }

@@ -1,15 +1,15 @@
 .app-input {
     overflow: clip;
+    
+    border-style: solid;
+    border-width: 3px;
+    border-radius: var(--space-xl);
 
-    border-radius: var(--curve-rounded);
-
-    box-shadow: inset 0px 0px 5px #000;
-
-    font-size: inherit;
+    box-shadow: inset 0px 0px 2px #000;
 
     width: auto;
     height: auto;
-    padding: var(--space-m);
+    padding: var(--space-xs) var(--space-xxs) var(--space-xs) var(--space-m);
     margin: 0;
 
     input, textarea {
@@ -18,24 +18,23 @@
         font-size: inherit;
 
         width: 100%;
-        max-width: 100%;
-        height: 100%;        
+        max-width: 100%;     
     }
+    label {
+        max-width: 300px;
+    }
+
 }
 
 .app-input {
     &.dropdown {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: var(--space-l);
-
-        padding: var(--space-m);
+        padding: var(--space-s) var(--space-s) var(--space-s) var(--space-m);
 
         .hidden {
             display: none;
+        }
+        input {
+            width: auto;
         }
     }
 }

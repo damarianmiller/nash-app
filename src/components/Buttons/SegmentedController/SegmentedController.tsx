@@ -1,20 +1,18 @@
 import "./SegmentedController.css";
+import { SegmentedControllerProps } from "@/Components/Types";
+import { Row } from "@/Components/Containers/Wrappers";
 import Button from "@/Components/Buttons/Button";
 
-type SegmentedControllerProps = {
-    options: { label: string; icon: string }[];
-    active: string;
-    onChange: (label: string) => void;
-}
-
 export default function SegmentedController(props: SegmentedControllerProps) {
-    const { options, ...segmentedControllerProps } = props;
-    const classNames = "app-segmented-controller";
+    const { options, active, className, ...segmentedControllerProps } = props;
+    const classNames =
+        "app-segmented-controller" +
+        (className ? " " + className : "");
     return (
-        <div {...segmentedControllerProps} className={classNames}>
+        <Row {...segmentedControllerProps} className={classNames} wrap="nowrap" mainAxis="center" crossAxis="center" gap="xs">
             {options.map((option: any, index: number) => (
-                <Button key={index} variant="slab" size="xs" icon={option.icon} text={option.label} active={props.active === option.label} onClick={() => { props.onChange(option.label); }}/>
+                <Button key={index} variant="slab" size="xs" icon={option.icon} text={option.label} active={active === option.label} onClick={() => { props.onChange(option.label); }}/>
             ))}
-        </div>
+        </Row>
     );
 }

@@ -37,13 +37,13 @@ function CreateAssignment() {
 	const assignmentTypeOptions = assignmentTypes.map(type => ({ label: type, value: type.toLowerCase() }));
 
 	return (
-		<Form process="single-step" action={() => { }}>
+		<Form process="single-step" action={() => {}}>
 			<Input.Text size="l" name="title" placeholder="Title" icon="case-sensitive" required />
 			<Input.Text size="l" name="description" placeholder="Description" icon="text-align-start" />
 			<Input.Dropdown size="l" name="course" placeholder="Course" icon="apple" options={courseOptions} required />
 			<Input.Dropdown size="l" name="type" placeholder="Type" icon="logs" options={assignmentTypeOptions} required />
 			<Input.DateTime size="l" name="dueDate" required />
-			<Button type="submit" size="l" icon="pencil" text="Create"/>
+			<Button type="submit" size="l" icon="pencil" text="Create" variant="push"/>
 		</Form>
 	);
 }
@@ -65,9 +65,9 @@ export default function AssignmentsPage() {
 					<h2>Assignments</h2>
 				</Column>
 				<Row wrap="nowrap" mainAxis="end" crossAxis="center" gap="s">
-					<Button size="m" icon="list-filter" onClick={() => { setSheetContent("Filter Assignments"); setSheetOpen(true);}}/>
-					<Button size="m" icon="arrow-up-down" onClick={() => { setSheetContent("Sort Assignments"); setSheetOpen(true); }} />
-					<Button size="m" icon="plus" onClick={() => { setSheetContent("Create Assignment"); setSheetOpen(true); }} />
+					<Button size="m" icon="list-filter" variant="push" onClick={() => { setSheetContent("Filter Assignments"); setSheetOpen(true);}}/>
+					<Button size="m" icon="arrow-up-down" variant="push" onClick={() => { setSheetContent("Sort Assignments"); setSheetOpen(true); }} />
+					<Button size="m" icon="plus" variant="push" onClick={() => { setSheetContent("Create Assignment"); setSheetOpen(true); }} />
 				</Row>
 			</Row>
 		

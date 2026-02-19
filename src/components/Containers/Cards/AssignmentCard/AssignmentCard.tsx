@@ -1,9 +1,9 @@
 import calculateAssignmentCompletionProgress from "@/lib/calcProgress";
-import Card from "../Card";
-import { Row, Column } from "../../Wrappers";
-import Button from "../../../Buttons/Button";
-import Chip from "../../Chip/Chip";
-import ProgressBar from "../../../Indicators/ProgressBar/ProgressBar";
+import Card from "@/Components/Containers/Cards/Card";
+import { Row, Column } from "@/Components/Containers/Wrappers";
+import Button from "@/Components/Buttons/Button";
+import Chip from "@/Components/Containers/Chip/Chip";
+import ProgressBar from "@/Components/Indicators/ProgressBar/ProgressBar";
 
 export default function AssignmentCard({ assignment }: any) {
     const dueDate = new Date(assignment.due_date);
@@ -18,7 +18,7 @@ export default function AssignmentCard({ assignment }: any) {
                         <h5>{dueDay}</h5>
                     </Column>
                 )}
-                <Column wrap="wrap" mainAxis="stretch" crossAxis="start" gap="m" fillWidth>
+                <Column wrap="wrap" mainAxis="center" crossAxis="start" gap="m" fillWidth>
                     <Row wrap="wrap" mainAxis="start" crossAxis="center" gap="s">
                         {assignment.course && (
                             <Chip size="s" color={assignment.course.title}>
@@ -31,7 +31,7 @@ export default function AssignmentCard({ assignment }: any) {
                             </Chip>
                         )}
                     </Row>
-                    <Column wrap="nowrap" mainAxis="start" crossAxis="center" gap="xs">
+                    <Column wrap="nowrap" mainAxis="center" crossAxis="start" gap="xs">
                         {assignment.title && (
                             <h3>{assignment.title}</h3>
                         )}
@@ -43,7 +43,7 @@ export default function AssignmentCard({ assignment }: any) {
                 </Column>
                 <Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="s">
                     {assignment.id && (
-                        <Button size="l" icon="arrow-right" href={"/assignments/" + assignment.id} />
+                        <Button size="l" icon="arrow-right" variant="push" href={"/assignments/" + assignment.id} />
                     )}                    
                 </Column>
             </Row>

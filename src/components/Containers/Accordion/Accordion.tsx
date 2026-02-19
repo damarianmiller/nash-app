@@ -12,9 +12,9 @@ export default function Accordion(props: AccordionProps) {
 
     const [isOpen, setIsOpen] = useState(isOpenByDefault ?? false);
     return (
-        <Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="s" {...accordionProps} className={classNames}>
-            <Row as="header" wrap="nowrap" mainAxis="start" crossAxis="center" gap="s">
-                <Button size="m" onClick={() => setIsOpen(!isOpen)}></Button>
+        <Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="s" {...accordionProps} className={classNames}>
+            <Row as="header" wrap="nowrap" mainAxis="start" crossAxis="center" gap="s" fillWidth>
+                <Button size="xl" icon={isOpen ? "panel-top-close" : "panel-top-open"} onClick={() => setIsOpen(!isOpen)}></Button>
                 {header}
             </Row>
             {isOpen && content}
