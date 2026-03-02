@@ -11,8 +11,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import fetchJSON from "@/lib/fetchJSON";
 import BottomSheet from "@/Components/Containers/BottomSheet/BottomSheet";
-import Form from "@/Components/Forms/Form";
-import * as Input from "@/Components/Inputs/Input";
+import CreateCourse from "@/Components/Forms/Flows/CreateCourse";
 
 type Course = {
 	id: string;
@@ -38,21 +37,6 @@ type Institution = {
 };
 
 type UserInstitution = { id: string; name: string; slug: string };
-
-
-
-function CreateCourse( { userInstitutions }: { userInstitutions: {label: string; value: string}[] } ) {
-	return (
-		<Form process="single-step" action={() => {}}>
-			<Input.Text size="l" name="title" label="Title" placeholder="Intro to Sociology" icon="case-sensitive" required />
-			<Input.Text size="l" name="code" label="Code" placeholder="SOC 101" icon="hash" required />
-			<Input.Text size="l" name="description" label="Description" placeholder="A survey of sociological concepts and theories." icon="file-text" required />
-			<Input.Number size="l" name="credit_hours" label="Credit Hours" placeholder="3" icon="clock" min={0} max={6} step={1} required />
-			<Input.Dropdown size="l" name="institution" label="Institution" icon="building" options={userInstitutions} required /> 
-			<Button size="m" type="submit" text="Create Course" icon="plus" variant="push" />
-		</Form>
-	);	
-}
 
 export default function CoursesPage() {
 	const [viewCourses, setViewCourses] = useState<"My courses" | "All courses">("My courses");
@@ -88,7 +72,7 @@ export default function CoursesPage() {
 			<BottomSheet isOpen={sheetOpen} onClose={() => setSheetOpen(false)} title={sheetContent}>
 				{sheetContent === "Create Course" && <CreateCourse userInstitutions={(enrolledInstitutionsQuery.data ?? []).map((institution) => ({ label: institution.name, value: institution.id }))} />}
 			</BottomSheet>
-			<Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="l" fillWidth>
+			<Column as="header" wrap="nowrap" mainAxis="center" crossAxis="center" gap="l" fillWidth>
 				<Row wrap="wrap" mainAxis="space-around" crossAxis="center" gap="m" fillWidth>
 					<Column wrap="nowrap" mainAxis="start" crossAxis="center" gap="xs">
 						<h2>Courses</h2>

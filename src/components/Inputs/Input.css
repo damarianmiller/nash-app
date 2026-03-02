@@ -9,8 +9,15 @@
 
     width: auto;
     height: auto;
-    padding: var(--space-xs) var(--space-xxs) var(--space-xs) var(--space-m);
+    padding: var(--space-s) var(--space-m) var(--space-xs) var(--space-m);
     margin: 0;
+
+    &.error {
+        border-color: var(--color-red);
+        .error-message, .error-button {
+            color: var(--color-red);
+        }
+    }
 
     input, textarea {
         padding: 0;
@@ -35,6 +42,9 @@
         }
         input {
             width: auto;
+        }
+        &.error {
+            border-color: var(--color-red);
         }
     }
 }

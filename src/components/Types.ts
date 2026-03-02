@@ -1,4 +1,3 @@
-type process = "single-step" | "multi-step";
 type iconName = any;
 
 export const SizeHelper = {
@@ -90,9 +89,8 @@ export type BottomSheetProps = React.ComponentPropsWithRef<"div"> & {
 export type CardProps = React.ComponentPropsWithRef<"article">
 export type ChipProps = React.ComponentPropsWithRef<"span">
 
-
-export type FormProps = Omit<React.ComponentPropsWithoutRef<"form">, "action"> & {
-    action: ((arg0: any) => void);
+type process = "single-step" | "multi-step";
+export type FormProps = React.ComponentPropsWithoutRef<"form"> & {
 	process: process;
 };
 //--------------------------------------------------------------------------------------
@@ -135,14 +133,16 @@ export type IconProps = React.ComponentPropsWithRef<"svg"> & {
 //--------------------------------------------------------------------------------------
 // INPUT
 //--------------------------------------------------------------------------------------
-export type InputProps = Omit<React.ComponentPropsWithRef<"input">, "size" | "name" | "type" | "placeholder" | "required"> & {
+export type InputProps = Omit<React.ComponentPropsWithRef<"input">, "size" | "type" | "name" | "placeholder" | "required" | "onChange"> & {
 	size: Size;
-	name: string;
 	type: string;
+	name: string;
 	label: string;
 	placeholder: string;
 	icon: iconName;
-	required?: boolean;
+	value: string;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	error: string | undefined;
 };
 
 export type ProgressBarProps =

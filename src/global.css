@@ -55,7 +55,7 @@ body {
 	padding: 0;
 }
 
-main, header, footer, nav, section, article, div, span {
+main, header, footer, nav, section, article, div, span, form {
 	display: flex;
 
 	scrollbar-width: thin;

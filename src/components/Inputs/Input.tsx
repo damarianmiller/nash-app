@@ -9,19 +9,25 @@ import { useState } from "react";
 
     
 export default function Input(props: InputProps) {
-    const { size, label, icon, className, ...inputProps } = props;
-    let classNames = "app-input" + 
+    const { size, label, icon, error, className, ...inputProps } = props;
+    const classNames = "app-input" + 
     (className ? " " + className : "") + 
-    (size ? " size-" + size : "");
+    (size ? " size-" + size : "") +
+    (error ? " error" : "");
+
+    const [errorVisible, setErrorVisible] = useState(false);
 
     return (
-        <Row className={classNames} wrap="nowrap" mainAxis="center" crossAxis="start" gap="m">
+        <Row className={classNames} wrap="nowrap" mainAxis="center" crossAxis="stretch" gap="m">
             {icon && <Icon size={size} name={icon} />}
-            <Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="none" fillWidth >
+            <Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="xxs" fillWidth >
                 <label>{label}</label>
                 <input {...inputProps} size={16} />
+                {error && errorVisible && <p className="error-message">{error}</p>}
             </Column>
-            
+            <Column wrap="nowrap" mainAxis="center" crossAxis="center" gap="none">
+                {error && <Button className="error-button" size={size} icon="circle-alert" onClick={() => setErrorVisible(!errorVisible)} />}
+            </Column>
         </Row>
     );
 }
@@ -29,13 +35,9 @@ export default function Input(props: InputProps) {
 type TextProps = Omit<InputProps, "type">;
 
 export function Text(props: TextProps) {
-    const { size, name, label, placeholder, icon, required, className, ...inputProps } = props;
-    const classNames = "app-input" +
-        (className ? " " + className : "") +
-        (size ? " size-" + size : "");
-
+    const { size, name, label, placeholder, icon, onChange, value, ...inputProps } = props;
     return (
-        <Input {...inputProps} size={size} name={name} type="text" label={label} placeholder={placeholder} icon={icon} required={required} />
+        <Input {...inputProps} size={size} type="text" name={name} label={label} placeholder={placeholder} icon={icon} onChange={onChange} value={value}/>
     );
 }
 
@@ -44,57 +46,59 @@ type NumberProps = Omit<InputProps, "type"> & {
     max: number;
     step: number;
 };
-
 export function Number(props: NumberProps) {
-    const { size, name, label, placeholder, icon, required, className, ...inputProps } = props;
-    const classNames = "app-input" +
-        (className ? " " + className : "") +
-        (size ? " size-" + size : "");
-
+    const { size, name, label, placeholder, icon, onChange, value, ...inputProps } = props;
     return (
-        <Input {...inputProps} size={size} name={name} type="number" label={label} placeholder={placeholder} icon={icon} required={required} />
+        <Input {...inputProps} size={size} name={name} type="number" label={label} placeholder={placeholder} icon={icon} onChange={onChange} value={value} />
     );
 }
 
-type EmailProps = Omit<InputProps, "type" | "placeholder" | "icon">;
-
+type EmailProps = Omit<InputProps, "type" | "label" | "placeholder" | "icon">;
 export function Email(props: EmailProps) {
-    const { size, name, required, ...inputProps } = props;
+    const { size, name, onChange, value, ...inputProps } = props;
     return (
-        <Input {...inputProps} size={size} name={name} type="email" placeholder="Email Address" icon="at-sign" required={required} />
+        <Input {...inputProps} size={size} type="email" name={name} label="Email Address" placeholder="email@domain.com" icon="at-sign" onChange={onChange} value={value} />
     );
 }
 
 type DateTimeProps = Omit<InputProps, "type" | "placeholder" | "icon">;
 export function DateTime(props: DateTimeProps) {
-    const { size, name, required, ...inputProps } = props;
+    const { size, name, label, onChange, value, ...inputProps } = props;
     return (
-        <Input {...inputProps} size={size} name={name} type="datetime-local" placeholder="Select Date and Time" icon="calendar-clock" required={required} />
+        <Input {...inputProps} size={size} type="datetime-local" name={name} label={label} placeholder="Select Date and Time" icon="calendar-clock" onChange={onChange} value={value} />
     );
 } 
 
 type DropdownProps = Omit<InputProps, "type" | "placeholder"> & {
     options: { label: string; value: string }[];
 };
-
 export function Dropdown(props: DropdownProps) {
-    const { size, name, label, icon, options, required, className, ...inputProps } = props;
+    const { size, name, label, icon, options, onChange, value, error, className, ...inputProps } = props;
     const classNames =
         "app-input dropdown" +
-        (className ? " " + className : "");
+        (className ? " " + className : "") + 
+        (size ? " size-" + size : "") +
+        (error ? " error" : "");
 
+    const [errorVisible, setErrorVisible] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState<{ label: string, value: string }>({ label, value: "" });
+    const selectedOptionLabel = options.find(option => option.value === value)?.label ?? label;
 
     return (
         <Column className={classNames} wrap="nowrap" mainAxis="center" crossAxis="center" gap="xl">
-            <Row wrap="nowrap" mainAxis="space-between" crossAxis="center" gap="none" fillWidth onClick={() => setDropdownOpen(!dropdownOpen)}>
-                <Row wrap="nowrap" mainAxis="start" crossAxis="start" gap="m" size={size}>
+            <Row wrap="nowrap" mainAxis="space-between" crossAxis="stretch" gap="none" fillWidth>
+                <Row wrap="nowrap" mainAxis="start" crossAxis="start" gap="m" size={size} onClick={() => setDropdownOpen(!dropdownOpen)}>
                     <Icon size={size} name={icon} />
-                    <label>{selectedOption.label}</label>
-                    <input {...inputProps} type="hidden" name={name} value={selectedOption.value} required={required} />
+                    <Column wrap="nowrap" mainAxis="start" crossAxis="start" gap="xxs">
+                        <label>{selectedOptionLabel}</label>
+                        {error && errorVisible && <p className="error-message">{error}</p>}
+                    </Column>
+                    <input {...inputProps} type="hidden" name={name} value={value} />
                 </Row>
-                <Button type="button" size={size} icon={dropdownOpen ? "chevron-up" : "chevron-down"} onClick={() => setDropdownOpen(!dropdownOpen)} />
+                <Row wrap="nowrap" mainAxis="center" crossAxis="center" gap="s">
+                    <Button type="button" size={size} icon={dropdownOpen ? "chevron-up" : "chevron-down"} onClick={() => setDropdownOpen(!dropdownOpen)} />
+                    {error && <Button className="error-button" size={size} icon="circle-alert" onClick={() => setErrorVisible(!errorVisible)} />}
+                </Row>
             </Row>
             {dropdownOpen && (
                 <Column wrap="nowrap" mainAxis="center" crossAxis="start" gap="m" fillWidth>
@@ -105,9 +109,13 @@ export function Dropdown(props: DropdownProps) {
                                 type="radio"
                                 name={name + "-radio"}
                                 value={option.value}
-                                checked={selectedOption.value === option.value}
-                                onChange={() => { setSelectedOption(option); setDropdownOpen(false); }}
-                                required={required}
+                                checked={value === option.value}
+                                onChange={() => {
+                                    onChange?.({
+                                        target: { name, value: option.value}
+                                    } as React.ChangeEvent<HTMLInputElement>);
+                                    setDropdownOpen(false);
+                                }}
                             />
                             <label htmlFor={name + "-radio-" + index}>{option.label}</label>
                         </Row>

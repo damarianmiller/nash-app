@@ -1,17 +1,8 @@
 .app-form {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: stretch;
-    gap: var(--space-xl);
-
+    box-shadow: inset 0px 0px 6px var(--color-dark);
     border-radius: var(--curve-rounded);
 
-    width: auto;
-    height: auto;
     padding: var(--space-xl);
-    margin: 0;
 
     .app-button {
         align-self: center;

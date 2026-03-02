@@ -65,6 +65,7 @@ h6 {
 p {
     font-size: var(--size-s);
     font-weight: var(--weight-normal);
+    max-width: 450px;
 }
 
 

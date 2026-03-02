@@ -1,6 +1,7 @@
 import { Row, Column } from "@/Components/Containers/Wrappers";
 import Button from "@/Components/Buttons/Button";
 import Chip from "@/Components/Containers/Chip/Chip";
+import Card from "@/Components/Containers/Cards/Card";
 import AssignmentCard from "@/Components/Containers/Cards/AssignmentCard/AssignmentCard";
 
 import createClient from "@/lib/supabase/server";
@@ -34,46 +35,51 @@ export default async function CoursePage({
 
     const isEnrolledInCourse = await isEnrolled(await getUser(), course);
 
-    return (isEnrolledInCourse ? (
-        <Column wrap="nowrap" xAlign="start" yAlign="start" gap="xxl" fillHeight>
-            <Row wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
-                <Column wrap="nowrap" xAlign="start" yAlign="start" gap="s">
-                    <Chip size="m">{course.code}</Chip>
-                    <h2>{course.title}</h2>
+    const enrolled = false;
+
+    if (enrolled) {
+        return (
+            <>
+                <Column as="header" wrap="nowrap" mainAxis="center" crossAxis="start" gap="l" fillWidth>
+                    <Row wrap="wrap" mainAxis="space-between" crossAxis="center" gap="m" fillWidth>
+                        <Column wrap="nowrap" mainAxis="center" crossAxis="start" gap="xs">
+                            <Chip>{course.code}</Chip>
+                            <h2>{course.title}</h2>
+                        </Column>
+                        <Row wrap="nowrap" mainAxis="center" crossAxis="center" gap="s">
+                            <Button size="m" icon="flag" variant="push" />
+                            <Button size="m" icon="badge-plus" variant="push" />
+                        </Row>
+                    </Row>
                     <p>{course.description}</p>
                 </Column>
-                
-                <Row wrap="wrap" xAlign="end" yAlign="center" gap="s">
-                    <Button size="m" icon="flag" />
-                    <Button size="m" icon="door-open" />
+            </>
+        );
+    }
+    return (
+        <>
+            <Column as="header" wrap="nowrap" mainAxis="center" crossAxis="start" gap="l" fillWidth>
+                <Row wrap="wrap" mainAxis="space-between" crossAxis="center" gap="m" fillWidth>
+                    <Column wrap="nowrap" mainAxis="center" crossAxis="start" gap="xs">
+                        <Chip>{course.code}</Chip>
+                        <h2>{course.title}</h2>                        
+                    </Column>
+                    <Row wrap="nowrap" mainAxis="center" crossAxis="center" gap="s">
+                        <Button size="m" icon="flag" variant="push" />
+                        <Button size="m" icon="badge-plus" variant="push" />
+                    </Row>
                 </Row>
-            </Row>
-            
-
-
-
-            <Column wrap="nowrap" xAlign="start" yAlign="start" gap="m" fillWidth>
-                <h3>Assignments</h3>
-                {assignments && assignments.map((assignment, index) => (
-                    <AssignmentCard key={index} assignment={assignment} />
-                ))}
-
+                <p>{course.description}</p>
             </Column>
-        </Column>
-    ) : (
-        <Column wrap="nowrap" xAlign="center" yAlign="center" gap="l">
-            <Row wrap="nowrap" xAlign="space-between" yAlign="center" gap="l" fillWidth>
-                <Column wrap="nowrap" xAlign="start" yAlign="start" gap="s">
-                    <Chip size="m">{course.code}</Chip>
-                    <h2>{course.title}</h2>
-                </Column>
 
-                <Row wrap="nowrap" xAlign="end" yAlign="center" gap="xs">
-                    <Button size="m" icon="flag"/>
-                    <Button size="m" icon="badge-plus" />
-                </Row>
-            </Row>
-            <p>{course.description}</p>
-        </Column>
-    ));
+            <Column as="section" wrap="nowrap" mainAxis="center" crossAxis="stretch" gap="m" fillWidth>
+                <Card>
+                    <h4>Students</h4>
+                    <Button size="m" icon="badge-plus" text="Join Course" variant="push" />
+                </Card>
+                
+            </Column>
+            
+        </>
+    );
 }
